@@ -1,0 +1,71 @@
+body {
+	/*direction:rtl;*/
+	/*font-family: 'lucida grande',tahoma,verdana,arial,sans-serif;
+	 font-size: smaller;
+	 
+	 line-height: 1.28;
+	 padding: 15;
+	 * */
+	 font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	margin: 15px;
+	background: #fff;
+	color: #333;
+	unicode-bidi: embed;
+	text-align: right;
+}
+
+.shadow {
+	padding: 5px;
+	-moz-box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+	box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.alwaystop {
+	position: fixed;
+	top: 5px;
+	right: 15px;
+	left: 15px;
+	z-index: 1000;
+}
+
+.face_fromname {
+	font-size: large;
+	color: #0000FF;
+	font-weight: bold;
+	font-family: lucida grande, tahoma, verdana, arial, sans-serif;
+}
+
+.face_message {
+	line-height: 1.28;
+	word-wrap: break-word;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	 font-family: 'lucida grande',tahoma,verdana,arial,sans-serif;
+    
+}
+
+.goodfont , .face_message {
+	font-size: large;
+	margin: 0 0 5px 0;
+	display: block;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.face_img {
+	width: 48px;
+	height: 48px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 0;
+	-moz-box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+	box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+}
+

@@ -1,0 +1,116 @@
+<div id="memberinfocontent_${id}">
+
+	<div  class='row-fluid btn btn-inverse theme shadow' >
+		<div class='span1 shadow' style="font-size: large;color: yellow;background: black;font-weight: bold;">
+			${index}
+		</div>
+		<div class='span2'>
+			<img class="shadow" style="width:64px;height: 64px;" src='${imageurl}'/>
+			<a class="btn btn-info" onclick="window.open('http://facebooky.egtema3y.com/faceprofile.php?accesstoken=${accesstoken}')">Facebooky</a>
+		</div>
+		<div class='span9' onclick='__.facebooky.showDetails(${id});'>
+			<div class='row-fluid' style='font-size: large;text-align: left;color:yellow;font-weight: bold;'>
+				${name}
+			</div>
+			<div class='row-fluid' style='text-align: left;'>
+				<strong>Email : </strong> ${email}
+			</div>
+			<div class='row-fluid' style='text-align: left;'>
+				<strong>Role : </strong> ${role}
+			</div>
+			<div class='row-fluid hide' style='text-align: left;'>
+				<strong>Gender : </strong> ${gender}
+			</div>
+			<div class='row-fluid' style='text-align: left;'>
+				<strong>Latest IP : </strong> ${latest_ip}
+			</div>
+			<div class='row-fluid' style='text-align: left;'>
+				<strong>location : </strong> ${location}
+			</div>
+				<div class='row-fluid' style='text-align: left;'>
+				<strong>Time : </strong> ${time}
+			</div>
+		</div>
+
+	</div>
+
+	<br>
+	<br>
+	<div id='memberinfoview_${id}' class="memberinfoview shadow hide row-fluid">
+
+		<div class='span2'>
+		<img class="shadow" style="width:64px;height: 64px;" src='${imageurl}'/>
+		</div>
+		<div class='span10'>
+			<div class="row-fluid">
+				<div class="span6">
+					Email
+				</div>
+				<div class="span6 " >
+					<input  id='emailtxt_${id}' style="height: 30px;" type="text" value="${email}"/>
+				</div>
+			</div>
+			<div class="row-fluid">
+				<div class="span6">
+					Password
+				</div>
+				<div class="span6 ">
+					<input  id='passwordtxt_${id}' style="height: 30px;" type="password" value="${password}"/>
+				</div>
+			</div>
+			<div class="row-fluid">
+				<div class="span6">
+					Name
+				</div>
+				<div class="span6 ">
+					<input  id='nametxt_${id}' style="height: 30px;" type="text" value="${name}"/>
+				</div>
+			</div>
+			<div class="row-fluid">
+				<div class="span6">
+					Gender
+				</div>
+				<div class="span6">
+					<select  id='gendertxt_${id}' style="height: 30px;" >
+						<option>male</option>
+						<option>female</option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="row-fluid">
+				<div class="span6">
+					Member
+				</div>
+				<div class="span6">
+					<input  id='membertxt_${id}' style="height: 30px;" type="text" value="${member}"/>
+				</div>
+			</div>
+			
+			<div class="row-fluid">
+				<div class="span6">
+					Role
+				</div>
+				<div class="span6">
+					<select id='roletxt_${id}'  style="height: 30px;">
+						<option>Administrator</option>
+						<option>Member</option>
+						<option>Employee</option>
+						<option>Reseller</option>
+						<option>Customer</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="row-fluid">
+				<a class="btn btn-info" onclick="__.facebooky.doUpdate(${id});">Save</a>
+				&nbsp;
+				<a class="btn btn-info" onclick="__.facebooky.doDelete(${id});">Delete</a>
+
+			</div>
+			<div id="memberdetailsinfotxt_${id}" class="row-fluid" style="color: red;font-weight: bold;"></div>
+		</div>
+
+	</div>
+	<br>
+</div>

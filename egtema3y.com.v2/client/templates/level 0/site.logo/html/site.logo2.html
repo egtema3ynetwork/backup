@@ -1,0 +1,61 @@
+<div class="navbar  navbar-fixed-top " >
+  <div class="navbar-inner">
+    <div class="container">
+ 
+      <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+      <a class="btn btn-navbar " data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+ 
+      <!-- Be sure to leave the brand out there if you want it shown -->
+      <a class="brand" href="#">Egtema3y.com</a>
+ 
+      <!-- Everything you want hidden at 940px or less, place within here -->
+      <div class="nav-collapse collapse">
+      
+      
+      <ul class="nav navbar-nav">
+
+	
+	 <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Change Theme <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="#" onclick="__.interface.changeTheme('btn-inverse')">Black</a></li>
+          <li><a href="#">Another action</a></li>
+          <li><a href="#">Something else here</a></li>
+          <li><a href="#">Separated link</a></li>
+          <li><a href="#">One more separated link</a></li>
+        </ul>
+      </li>
+      
+      
+<li>
+<div class="hide">
+			<a class="btn btn-inverse btn-small  " tooltip-ar="تغير لون الموقع" tooltip-en="Change Theme" oncack="__.interface.changeTheme('btn-inverse')"></a>
+			<a class="btn btn-success  btn-small " tooltip-ar="تغير لون الموقع" tooltip-en="Change Theme" oncack="__.interface.changeTheme('btn-success')"></a>
+			<a class="btn btn-danger  btn-small " tooltip-ar="تغير لون الموقع" tooltip-en="Change Theme" oncack="__.interface.changeTheme('btn-danger')"></a>
+			<a class="btn btn-info  btn-small " tooltip-ar="تغير لون الموقع" tooltip-en="Change Theme" oncack="__.interface.changeTheme('btn-info')"></a>
+			<a class="btn btn-primary  btn-small " tooltip-ar="تغير لون الموقع" tooltip-en="Change Theme" oncack="__.interface.changeTheme('btn-primary')"></a>
+			<a class="btn btn-inverse btn-small"   tooltip-ar="الذهاب الى اعلى الصفحة" tooltip-en="goto top" oncack="$('html, body').animate({scrollTop: '0px'}, 200);">
+				^
+			</a>
+			<a class="btn btn-inverse btn-small" tooltip-ar="من نحن - تعريف مختصر عن شبكة إجتماعى" tooltip-en="about us" oncack=" __.feature.display();">
+				!
+			</a>
+			<a id="site-interface-ar-button" tooltip-ar="تغير لغة الموقع الى العربية" tooltip-en="Change Language To Arabic" class="btn btn-inverse btn-small   ar-button" oncack="__.interface.changeLanguage('ar');">
+				ع
+			</a>
+			<a id="site-interface-en-button" tooltip-ar="تغير لغة الموقع الى الانجليزية" tooltip-en="Change Languge To Engash" class="btn btn-inverse btn-small   en-button" oncack="__.interface.changeLanguage('en');">
+				en
+			</a>
+			</div>
+			</li>
+		</ul>
+		
+      </div>
+ 
+    </div>
+  </div>
+</div>

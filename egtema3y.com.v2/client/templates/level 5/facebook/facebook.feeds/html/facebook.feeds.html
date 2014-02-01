@@ -1,0 +1,94 @@
+<div class="btn-primary shadow theme" style="height: 1;"></div>
+
+<div class="hide">
+	<input id="message_${postid}" value="${postmessage_d}" type="hidden" />
+	<input id="link_${postid}" value="${postlinkurl}" type="hidden" />
+	<input id="picture_${postid}" value="${postimage}" type="hidden" />
+	<input id="name_${postid}" value="${postlinkname}" type="hidden" />
+	<input id="caption_${postid}" value="${postcaption_d}" type="hidden" />
+	<input id="description_${postid}" value="${postdescription_d}" type="hidden" />
+	
+</div>
+
+
+<div class="row-fluid shadow" style="padding: 10px;width: 90%;">
+
+	<div class="row-fluid">
+
+		<div class="container-fluid span11">
+
+			<div class="row-fluid ">
+				<div class="span12">
+
+					<div class="span12  status">
+						<table style="width: 100%">
+							<tr>
+								<td><a style="cursor: hand;" onclick="__.facebook.loadFeeds(0 , '' , '' , ${wallid});"> <span tooltip-ar="اضغط هنا لمشاهدة كل البوستات من هذه الصفحة" tooltip-en="Click Here To View All Posts From This Page"  class="goodfont ">${wallname}</span> </a></td>
+								<td style="vertical-align: top;">
+								<div class="goodfont" style="font-size: x-small; color: red; text-align: left;">
+									${time}
+								</div></td>
+
+							</tr>
+						</table>
+						<hr>
+						<div  class="message face_message " align="right" style="color: green;font-size: small;">
+							{{html postmessage2}}
+						</div>
+						<div class="message face_message " align="right">
+							{{html postmessage}}
+						</div>
+
+						<div class="face_attachment">
+							{{if postimage}}
+
+							<a  href="${postlinkurl}" target="_blank" ><img class="picture" src="${postimage}" style="position: relative" /></a>
+							{{/if}}
+							<div class="face_attachment-data">
+								<div class="face_name" >
+									<a  href="${postlinkurl}" target="_blank"  title="${postlinkurl}" >${postlinkname}</a>
+								</div>
+								<div   class="face_caption" >
+									{{html postcaption}}
+								</div>
+								<div   class="face_description face_message" align="right" style="font-size: smaller;">
+									{{html postdescription}}
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="span1">
+			<a href="http://www.facebook.com/profile.php?id=${wallid}" target="_blank"><img class="face_img" src="${wallimageurl}" /></a>
+		</div>
+
+	</div>
+
+<div align="right" class=" row-fluid hide  Administrator" style="padding: 2px;margin-bottom: 5px;">
+	<div class="  span3"></div>
+	
+	
+	<div class="btn btn-small theme span3" id="badbutton_${postid}" onclick="__.facebook.bad('${postid}' , '${tags}');">غير اخلاقى <div id="badtxt_${postid}">0</div></div>
+	<div class="btn btn-small theme span3" id="unlikebutton_${postid}" onclick="__.facebook.unlike('${postid}' , '${tags}');">لا يعجبنى <div id="unliketxt_${postid}">0</div></div>
+	<div class="btn btn-small theme span3" id="likebutton_${postid}" onclick="__.facebook.like('${postid}' , '${tags}');">اعجبنى <div id="liketxt_${postid}">13</div></div>
+	
+</div>
+
+<div class=" row-fluid hide  Administrator" style="padding: 2px;">
+	
+	<div class="span8 offset2 btn theme" onclick="__.facebook.share('${postid}')">Share</div>
+	
+	
+</div>
+
+</div>
+
+
+
+<br>
+

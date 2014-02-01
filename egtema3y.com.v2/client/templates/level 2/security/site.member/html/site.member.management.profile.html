@@ -1,0 +1,73 @@
+<div class="btn btn-primary row-fluid theme shadow" style="font-size: x-large;font-weight: bold;" data-en="Profile" data-ar="بيانات المستخدم" >Profile</div>
+<br><br>
+<div id='memberprofileview_${id}' class="memberprofileview shadow row-fluid">
+
+		<div class='span2'>
+		<img class="shadow" style="width:64px;height: 64px;" src='${imageurl}'/>
+		</div>
+		<div class='span10'>
+			<div class="row-fluid">
+				<div class="span2" data-en="Email" data-ar="البريد الالكترونى" >
+					Email
+				</div>
+				<div class="span10 " >
+					<input class="row-fluid"  id='emailtxt_${id}' style="height: 30px;" type="text" value="${email}" maxlength="50"/>
+				</div>
+			</div>
+			<div class="row-fluid">
+				<div class="span2" data-en="Password" data-ar="كلمة المرور" >
+					Password
+				</div>
+				<div class="span10 ">
+					<input class="row-fluid"  id='passwordtxt_${id}' style="height: 30px;" type="password" value="${password}" maxlength="30"/>
+				</div>
+			</div>
+			<div class="row-fluid">
+				<div class="span2" data-en="Name" data-ar="الاسم بالكامل" >
+					Name
+				</div>
+				<div class="span10 ">
+					<input  class="row-fluid" id='nametxt_${id}' style="height: 30px;" type="text" value="${name}" maxlength="50"/>
+				</div>
+			</div>
+			<div class="row-fluid">
+				<div class="span2" data-en="Gender" data-ar="الجنس" >
+					Gender
+				</div>
+				<div class="span10">
+					<select class="row-fluid"  id='gendertxt_${id}' style="height: 30px;" >
+						<option>male</option>
+						<option>female</option>
+					</select>
+				</div>
+			</div>
+			<div class="row-fluid security-enabled Administrator">
+				<div class="span2" data-en="Role" data-ar="الصلاحيات" >
+					Role
+				</div>
+				<div class="span10">
+					<select class="row-fluid" id='roletxt_${id}'  style="height: 30px;">
+						<option>Member</option>
+						<option>Administrator</option>
+						
+						<option>Employee</option>
+						<option>Reseller</option>
+						<option>Customer</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="row-fluid">
+				<a class="btn btn-info span8 offset2"  onclick="__.member.doUpdate(${id});" data-en="Save" data-ar="حفظ" >Save</a>
+			
+			</div>
+			<div id="memberdetailsinfotxt_${id}" class="row-fluid" style="color: red;font-weight: bold;"></div>
+		</div>
+
+	</div>
+	
+	<hr>
+	<div class="row-fluid goodfont">
+		<p class="text-info">يفضل ان تسجل دخول باستخدام حساب الفيسبوك اولا ثم تضع كلمة مرور لكى تستطيع ان تسجل دخول بعد ذلك بدون استخدام حساب الفيسبوك</p>
+		<p >عندما تسجل دخول باستخدام حساب الفيسبوك فأنك بذلك تستطيع ان تستفيد من خدمات النشر الالكترونى على الفيسبوك وخدمات اخرى كثيرة</p>
+	</div>
