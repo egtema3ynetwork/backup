@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        
+          <link href="http://css.egtema3y.com/bootstrap.min.css" rel="stylesheet">
+    <link href="http://css.egtema3y.com/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="http://css.egtema3y.com/egtema3y.css" rel="stylesheet">
+
+
+    <script src="http://js.egtema3y.com/jquery.js"></script>
+    <script src="http://js.egtema3y.com/bootstrap.min.js"></script>
+    <script src="http://js.egtema3y.com/jquery.base64.js"></script>
+    <script src="http://js.egtema3y.com/jquery.tmpl.js"></script>
+      <script src="http://js.egtema3y.com/egtema3y.js"></script>
+          
+        <title></title>
+    </head>
+    <body>
+        JS Files
+        <hr>
+        <div class="label label-warning" id="txtguid"></div>
+        <div class="btn btn-inverse" onclick="showguid();"> show new Guid</div>
+        <hr>
+         <div class="label label-key" id="txtkey"></div>
+        <div class="btn btn-inverse" onclick="showkey();"> show new Key</div>
+        <hr>
+        
+        <textarea id="txt1"></textarea>
+         <div class="btn btn-inverse" onclick="encode();"> encode</div>
+          <div class="btn btn-inverse" onclick="decode();"> decode</div>
+        <textarea id="txt2"></textarea>
+        
+        
+        <script>
+            function showguid()
+            {
+                $('#txtguid').html(newGuid());
+            }
+             function showkey()
+            {
+                $('#txtkey').html(newKey());
+            }
+            
+             function encode()
+            {
+                $('#txt2').val($.base64.encode($('#txt1').val()));
+            }
+             function decode()
+            {
+                $('#txt1').val($.base64.decode($('#txt2').val()));
+            }
+        </script>
+        
+        
+    </body>
+</html>

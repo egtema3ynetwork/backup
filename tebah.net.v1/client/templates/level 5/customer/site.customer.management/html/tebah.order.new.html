@@ -1,0 +1,51 @@
+<div>
+        <div id="tebah-order-new-div" class=" row-fluid shadow "  style="font-size:small;">
+
+            <div class="row-fluid" ><input class="row-fluid" style="height:30px;" type="text" id="service_useremail" data-en="Email" data-ar="البريد الالكترونى"  placeholder="Email" maxlength="50"/></div>
+          
+            <div class="row-fluid" ><input class="row-fluid" style="height:30px;" type="text" id="service_username" data-en="Your Name" data-ar="اسمك " placeholder="Your Name" maxlength="50"/></div>
+            <div class="row-fluid" ><input class="row-fluid" style="height:30px;" type="text" id="service_phone_code" data-en="Phone Code" data-ar="كود المحافظة " placeholder="Phone Code" maxlength="50"/></div>
+            <div class="row-fluid" ><input class="row-fluid" style="height:30px;" type="text" id="service_phone" data-en="Phone" data-ar="رقم التليفون الارضى " placeholder="Phone" maxlength="50"/></div>
+            <div class="row-fluid" ><input class="row-fluid" style="height:30px;" type="text" id="service_mobile" data-en="Mobile " data-ar="رقم الموبيل " placeholder="Mobile" maxlength="50"/></div>
+           
+
+							<div class="row-fluid">
+								<div class="span4">
+									Service Provider
+								</div>
+								<div class="span8">
+									<select class="row-fluid" style="height: 30px;" id="service_provider_id_"></select>
+								</div>
+							</div>
+							<div class="row-fluid">
+								<div class="span4">
+									Line Speed
+								</div>
+								<div class="span8">
+									<select class="row-fluid" style="height: 30px;" id="service_speed_id_"></select>
+								</div>
+							</div>
+							<div class="row-fluid">
+								<div class="span4">
+									Address
+								</div>
+								<div class="span8">
+									<textarea class="row-fluid" id='service_address' style="height: 30px;" ></textarea>
+								</div>
+							</div>
+							
+                      
+
+            <div class="row-fluid" >
+                <div style="font-size:small;" class="btn btn-success shadow " id="tebah-order-new-addbutton" onclick="__.customer.requestNewService();" data-en=" Order  " data-ar="اشترك الان"> Order </div>
+           
+            </div>
+            <p></p>
+
+           
+
+
+            <p></p>
+        </div>
+         <div class="row-fluid"> <div id="service_error_div" class="label label-important"></div></div>
+</div>

@@ -1,0 +1,33 @@
+<br />
+
+<div id="site-member-login-div" class=" shadow row-fluid" >
+
+	<div id="site-member-login-div" class=" row-fluid" style="font-size:small;">
+
+		<div class="row-fluid" >
+			<input style="height:30px;" class=" row-fluid"  type="email" required id="site-member-email-txt" data-en="Email" data-ar="البريد الالكترونى"  placeholder="Email" maxlength="30"/>
+		</div>
+		<div class="row-fluid" >
+			<input style="height:30px;" class=" row-fluid"  type="password" required id="site-member-password-txt" data-en="Password" data-ar="كلمة المرور"  placeholder="Password" maxlength="20"/>
+		</div>
+		<div class="row-fluid" >
+			&nbsp;<div style="font-size:small;" class="btn btn-success shadow " id="site-member-loginbutton" onclick="__.member.login();" data-en="Login" data-ar="تسجيل الدخول">
+				Login
+			</div>
+			&nbsp;<div style="font-size:small;" class="btn btn-info"  onclick="__.member.showRegister();" data-en="Join Members" data-ar="مشترك جديد">
+				Join Members
+			</div>
+		</div>
+		<p></p>
+
+		<a  href='http://egtema3y.com/sites/v2/webservices/accesstoken.register.tebah.php' target="_self" class='row-fluid btn  shadow theme' style='width: 90%; font-size: small;font-weight: normal;margin: 5px;'>
+			<font data-en='Facebook Login' data-ar='تسجيل الدخول بواسطة الفيسبوك'>Facebook Login</font>
+			<img  align="left" src="./client/images/facebook.ico"  style="margin:0px 0 0 5px;width:24px;height:24px;"/>
+		</a>
+
+		<div class="row-fluid">
+			<div id="site-login-error-div" class="label label-important"></div>
+		</div>
+
+	</div>
+</div>

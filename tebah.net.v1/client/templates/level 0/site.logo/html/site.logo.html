@@ -1,0 +1,45 @@
+<div>
+<div class="   theme shadow alwaystop goodfont"  id="logo-div">
+
+	<div class="row-fluid goodfont" >
+
+		<div class="span8" align="left">
+
+			<div class="shadow" style="display: inline-block;">
+				&nbsp; <div class="btn btn-inverse btn-small  " tooltip-ar="{{html theme_button_tooltip_ar}}" tooltip-en="{{html theme_button_tooltip}}" onclick="__.trigger('site/changeTheme','btn-inverse')"></div>
+				&nbsp;<div class="btn btn-success  btn-small " tooltip-ar="{{html theme_button_tooltip_ar}}" tooltip-en="{{html theme_button_tooltip}}" onclick="__.trigger('site/changeTheme','btn-success')"></div>
+				&nbsp;<div class="btn btn-danger  btn-small " tooltip-ar="{{html theme_button_tooltip_ar}}" tooltip-en="{{html theme_button_tooltip}}" onclick="__.trigger('site/changeTheme','btn-danger')"></div>
+				&nbsp;<div class="btn btn-info  btn-small " tooltip-ar="{{html theme_button_tooltip_ar}}" tooltip-en="{{html theme_button_tooltip}}" onclick="__.trigger('site/changeTheme','btn-info')"></div>
+				&nbsp;<div class="btn btn-primary  btn-small " tooltip-ar="{{html theme_button_tooltip_ar}}" tooltip-en="{{html theme_button_tooltip}}" onclick="__.trigger('site/changeTheme','btn-primary')"></div>
+			</div>
+
+			&nbsp;
+			<div class="btn theme btn-small"   tooltip-ar="{{html top_button_tooltip_ar}}" tooltip-en="{{html top_button_tooltip}}" onclick="__.trigger('site/goto/top' );">
+				{{html top_button}}
+			</div>
+			&nbsp;
+			<div class="btn theme btn-small" tooltip-ar="{{html about_button_tooltip_ar}}" tooltip-en="{{html about_button_tooltip}}" onclick="__.trigger('site/info/about');">
+				{{html about_button}}
+			</div>
+			&nbsp;
+			<div class="shadow" style="display: inline-block;">
+				<div id="site-interface-ar-button" tooltip-ar="{{html ar_button_tooltip_ar}}" tooltip-en="{{html ar_button_tooltip}}" class="btn btn-inverse btn-small   ar-button" onclick="__.trigger('site/changeLanguage','ar');">
+					{{html ar_button}}
+				</div>
+				&nbsp;
+				<div id="site-interface-en-button" tooltip-ar="{{html en_button_tooltip_ar}}" tooltip-en="{{html en_button_tooltip}}" class="btn btn-inverse btn-small   en-button" onclick="__.trigger('site/changeLanguage','en');">
+					{{html en_button}}
+				</div>
+			</div>
+
+		</div>
+
+		<div class="span4">
+			<div class=" arabicfont " align="right" style="line-height: 1.6;font-size:x-large;font-weight:bold;" data-en="{{html site_name}}" data-ar= "{{html site_name_ar}}" >
+				{{html site_name_ar}}
+			</div>
+		</div>
+
+	</div>
+</div>
+</div>

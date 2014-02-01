@@ -1,0 +1,70 @@
+<div id="new-request-content" >
+
+	<div class="row-fluid shadow btn theme goodfont">
+		New Customer Request
+	</div>
+	<br>
+	<div class="row-fluid shadow">
+
+		<div class="row-fluid">
+			<div class="span3">
+				Action Type
+			</div>
+			<div class="span9">
+				<select id='request_type_' class="row-fluid" style="height: 30px;" >
+					<optgroup label="Customer Request">
+						<option data-action = "Customer Request" >Suspend</option>
+						<option data-action = "Customer Request" >Un Suspend</option>
+						<option data-action = "Customer Request" >Hold</option>
+						<option data-action = "Customer Request" >Un Hold</option>
+						<option data-action = "Customer Request" >Cancel</option>
+						<option data-action = "Customer Request" >Reactivate</option>
+						<option data-action = "Customer Request" >Change IP Packge</option>
+						<option data-action = "Customer Request" >Request Extra Giga</option>
+						<option data-action = "Customer Request" >Change Speed</option>
+					</optgroup>
+					<optgroup label="Activation Request">
+						<option data-action = "Activation Request" >Pending TE</option>
+						<option data-action = "Activation Request">Pending WO</option>
+						<option data-action = "Activation Request">Pending Splitting</option>
+						<option data-action = "Activation Request">Pending Installing</option>
+						<option data-action = "Activation Request">Active</option>
+						<option data-action = "Activation Request" >Customer Active</option>
+					</optgroup>
+
+				</select>
+			</div>
+		</div>
+
+		<div class="row-fluid">
+			<div class="span3">
+				Status
+			</div>
+			<div class="span9">
+				<select id='request_status_' class="row-fluid" style="height: 30px;" >
+					<option>__Pending</option>
+					<option  class="security-enabled Administrator Manager">__Approved</option>
+                      <option class="security-enabled Administrator Manager">__Problem</option>
+					<option>__Cancel</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="row-fluid">
+			<div class="span3">
+				Notes
+			</div>
+			<div class="span9">
+				<textarea class="row-fluid" id='request_notes_' style="height: 100px;" ></textarea>
+			</div>
+		</div>
+		<br>
+		<div class="btn btn-info shadow" onclick="__.addNewRequest();">
+			Add To Customer Requests
+		</div>
+		<br><br>
+		<div class=" goodfont"  id="request-text-info"></div>
+	</div>
+
+</div>
+<hr>

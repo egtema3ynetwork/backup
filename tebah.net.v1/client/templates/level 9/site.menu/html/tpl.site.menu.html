@@ -1,0 +1,35 @@
+<div>
+<div class="row-fluid menu goodfont  " id="menu_${id}" style="margin: 5px;">
+
+	<div class="row-fluid" align="center" >
+
+		<div   onclick="${menu_func}" id="menu_button_${id}"  tooltip-en="${menu_tooltip}" tooltip-ar="${menu_tooltip_ar}"    class="btn row-fluid  ${menu_css} shadow  " style="width: 80%; ">
+
+			<div data-en="${menu_text}" data-ar="${menu_text_ar}"  style="display: inline;">
+				${menu_text}
+			</div>
+
+			{{if menu_hint}}
+
+			<div  class="label label-inverse" >
+				${menu_hint}
+			</div>
+			{{/if}}
+
+		</div>
+
+		<div class="btn btn-small  shadow view-enabled Developer" onclick="__.menu.edit(${id});" >
+			EDIT
+		</div>
+
+	</div>
+
+	<div class="row-fluid" >
+
+		<div id="submenu_${id}" class="submenu shadow hide"  style="margin:5px;width: 80%;" ></div>
+
+	</div>
+
+</div>
+
+</div>

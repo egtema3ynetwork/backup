@@ -1,0 +1,61 @@
+<div id="tebah_service_lookup_container" class="row-fluid security-enabled Administrator Manager shadow">
+<div class="row-fluid "  >
+		<div class="span4" data-ar="المحافظة" data-en="Region Name">
+			Region Name
+		</div>
+		<div class="span8">
+			<select class="row-fluid" style="height: 30px;" id="region_id"></select>
+		</div>
+	</div>
+
+	<div class="row-fluid"   >
+		<div class="span4" data-ar="السنترال" data-en="Central Name">
+			Central Name
+		</div>
+		<div class="span8">
+			<select class="row-fluid" style="height: 30px;" id="central_id"></select>
+		</div>
+	</div>
+
+	<div class="row-fluid " >
+		<div class="span4" data-ar="الشركة" data-en="Provider Name" >
+			Provider Name
+		</div>
+		<div class="span8">
+			<select class="row-fluid" style="height: 30px;" id="provider_id"></select>
+		</div>
+	</div>
+
+	<div class="row-fluid  " >
+		<div class="span4" data-ar="نوع الخدمة" data-en="Limit Name">
+			Limit Name
+		</div>
+		<div class="span8">
+			<select class="row-fluid" style="height: 30px;" id="limit_id"></select>
+		</div>
+	</div>
+
+	<div class="row-fluid "  >
+		<div class="span4" data-ar="السرعة" data-en="Speed Name">
+			Speed Name
+		</div>
+		<div class="span8">
+			<select class="row-fluid" style="height: 30px;" id="speed_id"></select>
+		</div>
+	</div>
+
+	<div class="row-fluid " >
+		<div class="span4" data-ar="السعر" data-en="Price" >
+			Price
+		</div>
+		<div class="span8">
+			<input type="text" class="row-fluid" style="height: 30px;" id="price_id" />
+		</div>
+	</div>
+	<br>
+	<div class="btn btn-info shadow" onclick="__.customer.addToServiceLookup();">Add To Service Lookup</div>
+<hr />
+<div id="lookup_error_id" class="label label-danger"></div>
+<hr />
+<div id="lookup_view_id" class="row-fluid" style="width: 90%;"></div>
+</div>

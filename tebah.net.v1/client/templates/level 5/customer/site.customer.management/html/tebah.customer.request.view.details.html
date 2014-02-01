@@ -1,0 +1,80 @@
+
+<div id="reguest_div_${id}">
+
+<div class=" label label-important shadow " id="request_error_${id}"></div>
+<br />
+<div class="row-fluid btn" style="width: 90%;" onclick="$('#request_content_${id}').toggle();">
+	<div class="span4" style="font-weight: bold;">${customer_name}</div>
+	<div class="span4">${request_type}</div>
+	<div class="span4">${status}</div>
+</div>
+
+<div class="row-fluid hide" id="request_content_${id}">
+<div class="row-fluid shadow theme" style="width: 90%;">
+	<div class='span2'>
+		<img class="img-polaroid " src='./client/images/${customer_gender}.jpg'/>
+		<div class="row-fluid" id="status_${id}">
+			${status}
+		</div>
+	</div>
+
+	<div class="span6">
+		<div class="row-fluid text-left">
+			<strong>${customer_phone}</strong>
+		</div>
+
+		<div class="row-fluid">
+			<textarea class="row-fluid" id='notes_${id}' style="height: 200px;" >${notes}</textarea>
+			
+							
+
+		</div>
+		<div class="row-fluid text-left">
+			${created_time}
+		</div>
+	</div>
+	<div class="span4">
+		
+		<div class="row-fluid" style="margin-bottom: 10px;">
+			<div class="label-inverse shadow">${action}<br>${request_type}</div>
+
+			</div>
+			
+		<div class="row-fluid" style="margin: 2px;width: 75%;">
+			
+			<div class="row-fluid btn btn-small btn-success security-enabled Administrator Manager" onclick="__.editRequest('${id}' , '__Approved' , '${action}' , '${request_type}' ,'${customer_id}' , '${customer_name}' , '${customer_gender}' , '${add_user_id}');">
+				Approved
+			</div>
+			<div class="row-fluid btn btn-small btn-info" style="margin-top: 3px;margin-bottom: 3px;"  onclick="__.editRequest('${id}' , '__Pending');">
+				Pending
+			</div>
+
+              <div class="row-fluid btn btn-small btn-danger" style="margin-top: 3px;margin-bottom: 3px;" onclick="__.editRequest('${id}' , '__Problem');">
+				Problem
+			</div>
+
+			<div class="row-fluid btn btn-small btn-warning"  onclick="__.editRequest('${id}' , '__Cancel');">
+				Cancel
+			</div>
+
+          
+
+			<div class="row-fluid btn btn-small btn-danger security-enabled Administrator " style="margin-top: 10px;margin-bottom: 3px;"  onclick="__.editRequest('${id}' , '__Delete');">
+				Delete
+			</div>
+		</div>
+		
+		
+			
+	</div>
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+<hr>

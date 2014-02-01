@@ -1,0 +1,567 @@
+<div id="customerinfocontent_${customer_id}">
+
+	<div onclick='__.customer.showDetails(${customer_id});' class='row-fluid btn btn-inverse theme shadow' >
+		<div class='span1 shadow' style="font-size: large;color: yellow;background: black;font-weight: bold;">
+			${index}
+		</div>
+		<div class='span2'>
+			<img class="shadow " src='./client/images/${customer_gender}.jpg'/>
+			<br />
+			<br />
+			<div onclick="__.customer.cardView('${customer_id}');" class="  btn btn-success">
+				Default
+			</div>
+		</div>
+		<div class='span8' >
+			<div class='row-fluid' style='font-size: large;text-align: left;color:yellow;font-weight: bold;'>
+				${customer_name}
+			</div>
+			<div class='row-fluid' style='text-align: left;'>
+				<strong>Email : </strong> ${customer_email}
+			</div>
+			<div class='row-fluid' style='text-align: left;'>
+				<strong>Gender : </strong> ${customer_gender}
+			</div>
+
+			<div class='row-fluid' style='text-align: left;'>
+				<strong>Phone : </strong> ${customer_phone}
+			</div>
+
+			<div class='row-fluid' style='text-align: left;'>
+				<strong>National ID : </strong> ${customer_national_id}
+			</div>
+			<div class='row-fluid' style='text-align: left;'>
+				<strong>City : </strong> ${customer_city}
+			</div>
+			<div class='row-fluid' style='text-align: left;'>
+				<strong>Address : </strong> ${customer_address}
+			</div>
+		</div>
+		<div class='span1 shadow' style="font-size: large;color: yellow;background: green;font-weight: bold;">
+			${customer_id}
+		</div>
+	</div>
+
+	<br>
+	<br>
+	<div id='customerinfoview_${customer_id}' class="customerinfoview shadow hide row-fluid">
+
+		<div class='span2'>
+			<img class="img-circle" src='./client/images/${customer_gender}.jpg'/>
+
+		</div>
+
+		<div class='span10'>
+
+			<div class="accordion" id='accordion_${customer_id}' >
+
+				<div class="accordion-group">
+					<div class="accordion-heading">
+						<a href="#collapse_1_${customer_id}" data-toggle="collapse" data-parent="#accordion_${customer_id}" class="accordion-toggle goodfont" data-ar="بيانات المتعاقد" data-en="Data Contractor" >Data Contractor</a>
+					</div>
+					<div class="accordion-body collapse " id="collapse_1_${customer_id}">
+						<div class="accordion-inner">
+
+							<div class="row-fluid">
+								<div class="span4" data-ar="الاسم بالكامل" data-en="Full Name" >
+									Full Name
+								</div>
+								<div class="span8">
+									<input class="row-fluid" id='customer_name_${customer_id}' style="height: 30px;" type="text" value="${customer_name}"/>
+									<input class="row-fluid" id='customer_member_id${customer_id}' style="height: 30px;" type="hidden" value="${customer_member_id}"/>
+								</div>
+							</div>
+
+							<div class="row-fluid">
+								<div class="span4" data-ar="العنوان" data-en="Address" >
+									Address
+								</div>
+								<div class="span8">
+									<input class="row-fluid"  id='customer_address_id_${customer_id}' style="height: 30px;" type="text" value="${customer_address_id}"/>
+								</div>
+							</div>
+
+							<div class="row-fluid">
+								<div class="span4" data-ar="الرقم القومى" data-en="National ID" >
+									National ID
+								</div>
+								<div class="span8">
+									<input class="row-fluid"  id='customer_national_id_${customer_id}' style="height: 30px;" type="text" value="${customer_national_id}" maxlength="14" />
+								</div>
+							</div>
+
+							<div class="row-fluid">
+								<div class="span4" data-ar="النوع" data-en="Gender">
+									Gender
+								</div>
+								<div class="span8">
+									<select class="row-fluid" id='customer_gender_${customer_id}' style="height: 30px;" ></select>
+								</div>
+							</div>
+							<div class="row-fluid">
+								<div class="span4" data-ar="تليفون المنزل" data-en="Home Phone" >
+									Home Phone
+								</div>
+								<div class="span8">
+									<input class="row-fluid" id='customer_phone_${customer_id}' style="height: 30px;" type="text" value="${customer_phone}"/>
+								</div>
+							</div>
+							<div class="row-fluid">
+								<div class="span4" data-ar="المحمول 1" data-en="Mobile 1" >
+									Mobile 1
+								</div>
+								<div class="span8">
+									<input class="row-fluid"  id='customer_mobile1_${customer_id}' style="height: 30px;" type="text" value="${customer_mobile1}"/>
+								</div>
+							</div>
+							<div class="row-fluid">
+								<div class="span4" data-ar="المحمول 2" data-en="Mobile 2">
+									Mobile 2
+								</div>
+								<div class="span8">
+									<input class="row-fluid"  id='customer_mobile2_${customer_id}' style="height: 30px;" type="text" value="${customer_mobile2}"/>
+								</div>
+							</div>
+
+							<div class="row-fluid">
+								<div class="span4" data-ar="البريد الالكترونى" data-en="Email">
+									Email
+								</div>
+								<div class="span8">
+									<input class="row-fluid" id='customer_email_${customer_id}' style="height: 30px;" type="text" value="${customer_email}"/>
+								</div>
+							</div>
+							
+								
+							<div class="row-fluid">
+								<div class="span4" data-ar="ملاحظات" data-en="Notes" >
+									Notes
+								</div>
+								<div class="span8">
+									<textarea class="row-fluid" id='customer_notes_${customer_id}' style="height: 30px;" >${customer_notes}</textarea>
+								</div>
+							</div>
+							
+
+						</div>
+					</div>
+				</div>
+
+				<div class="accordion-group">
+					<div class="accordion-heading">
+						<a href="#collapse_10_${customer_id}" data-toggle="collapse" data-parent="#accordion_${customer_id}" class="accordion-toggle goodfont" data-ar="بيانات الخدمة" data-en="Data Service" >Data Service</a>
+					</div>
+					<div class="accordion-body collapse " id="collapse_10_${customer_id}">
+						<div class="accordion-inner">
+
+							<div class="row-fluid">
+								<div class="span4" data-ar="صاحب التليفون" data-en="Phone Owner">
+									Phone Owner
+								</div>
+								<div class="span8">
+									<input class="row-fluid"  id='service_phone_owner_${customer_id}' style="height: 30px;" type="text" value="${service_phone_owner}"/>
+								</div>
+							</div>
+
+							<div class="row-fluid "  >
+								<div class="span4" data-ar="رقم الخدمة" data-en="	Service Phone">
+									Service Phone
+								</div>
+								<div class="span8">
+									<input type="text" class="row-fluid" style="height: 30px;" id="service_phone_${customer_id}" value="${service_phone}" />
+								</div>
+							</div>
+
+							<div class="row-fluid " >
+								<div class="span4" data-ar="المحافظة" data-en="Region Name" >
+									Region Name
+								</div>
+								<div class="span8">
+									<select class="row-fluid" style="height: 30px;" id="service_region_id_${customer_id}"></select>
+								</div>
+							</div>
+
+							<div class="row-fluid  "  >
+								<div class="span4" data-ar="السنترال" data-en="Central Name">
+									Central Name
+								</div>
+								<div class="span8">
+									<select class="row-fluid" style="height: 30px;" id="service_central_id_${customer_id}"></select>
+								</div>
+							</div>
+
+							<div class="row-fluid " >
+								<div class="span4" data-ar="الشركة" data-en="Provider Name" >
+									Provider Name
+								</div>
+								<div class="span8">
+									<select class="row-fluid" style="height: 30px;" id="service_provider_id_${customer_id}"></select>
+								</div>
+							</div>
+
+							<div class="row-fluid  " >
+								<div class="span4" data-ar="نوع الخدمة" data-en="Limit Name">
+									Limit Name
+								</div>
+								<div class="span8">
+									<select class="row-fluid" style="height: 30px;" id="service_limit_id_${customer_id}"></select>
+								</div>
+							</div>
+
+							<div class="row-fluid "  >
+								<div class="span4" data-ar="السرعة" data-en="Speed Name">
+									Speed Name
+								</div>
+								<div class="span8">
+									<select class="row-fluid" style="height: 30px;" id="service_speed_id_${customer_id}"></select>
+								</div>
+							</div>
+
+							<div class="row-fluid "  >
+								<div class="span4" data-ar="السعر" data-en="Price">
+									Price
+								</div>
+								<div class="span8">
+									<input type="text" class="row-fluid " style="height: 30px;" id="service_price_${customer_id}" value="${service_price}" />
+								</div>
+							</div>
+							
+								<div class="row-fluid">
+								<div class="span4" data-ar="عدد الايبهات" data-en="Ip Count" >
+									Ip Count
+								</div>
+								<div class="span8">
+									<select class="row-fluid" style="height: 30px;" id="service_ip_count_${customer_id}"></select>
+								</div>
+							</div>
+
+							<div class="row-fluid">
+								<div class="span4" data-ar="وسيلة التحصيل" data-en="Payment Type">
+									Payment Type
+								</div>
+								<div class="span8">
+									<select class="row-fluid" style="height: 30px;" id="service_payment_type_${customer_id}"></select>
+								</div>
+							</div>
+
+
+							<div class="row-fluid">
+								<div class="span4" data-ar="تكلفة الخدمة" data-en="service cost">
+									service cost
+								</div>
+								<div class="span8">
+									<input class="row-fluid "  id='service_cost_${customer_id}' style="height: 30px;" type="text" value="${service_cost}"/>
+								</div>
+							</div>
+							
+							<div class="row-fluid">
+								<div class="span4" data-ar="مبلغ التأمين" data-en="Payback Cost">
+									Payback Cost
+								</div>
+								<div class="span8">
+									<input class="row-fluid" id='service_payback_cost_${customer_id}' style="height: 30px;" type="text" value="${service_payback_cost}"/>
+								</div>
+							</div>
+							
+							
+							<div class="row-fluid">
+								<div class="span4" data-ar="عنوان التركيب" data-en="Istallation Address" >
+									Istallation Address
+								</div>
+								<div class="span8">
+									<textarea class="row-fluid" id='service_install_address_${customer_id}' style="height: 30px;" >${service_install_address}</textarea>
+								</div>
+							</div>
+							
+
+						</div>
+					</div>
+				</div>
+
+				<div class="accordion-group">
+					<div class="accordion-heading">
+						<a href="#collapse_3_${customer_id}" data-toggle="collapse" data-parent="#accordion_${customer_id}" class="accordion-toggle goodfont" data-ar="تفاصيل العرض" data-en="Offer Details" >Offer Details</a>
+					</div>
+					<div class="accordion-body collapse " id="collapse_3_${customer_id}">
+						<div class="accordion-inner">
+							<div class="row-fluid">
+								<div class="span4" data-ar="العرض" data-en="Offer Type" >
+									Offer
+								</div>
+								<div class="span8">
+									<select class="row-fluid" style="height: 30px;" id="offer_id_${customer_id}"></select>
+								</div>
+							</div>
+							
+							<div class="row-fluid" id="offer_details_${customer_id}">
+								
+							</div>
+							
+						</div>
+					</div>
+				</div>
+
+				<div class="accordion-group view-enabled Administrator Manager">
+					<div class="accordion-heading">
+						<a href="#collapse_0_${customer_id}" data-toggle="collapse" data-parent="#accordion_${customer_id}" class="accordion-toggle goodfont" data-ar="بيانات الوكيل" data-en="ISP Information" >ISP Information</a>
+					</div>
+					<div class="accordion-body collapse " id="collapse_0_${customer_id}">
+						<div class="accordion-inner">
+
+							<div class="row-fluid security-enabled Administrator Manager">
+								<div class="span4" data-ar="رقم البورت" data-en="Port On Frame" >
+									Port On Frame
+								</div>
+								<div class="span8">
+									<input class="row-fluid"  id='isp_portonframe_${customer_id}' style="height: 30px;" type="text" value="${isp_portonframe}"/>
+								</div>
+							</div>
+
+							<div class="row-fluid security-enabled Administrator Manager ">
+								<div class="span4" data-ar="الوكيل" data-en="ISP Name" >
+									ISP Name
+								</div>
+								<div class="span8">
+									<select class="row-fluid" style="height: 30px;" id="isp_id_${customer_id}"></select>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+				<div class="accordion-group">
+					<div class="accordion-heading">
+						<a href="#collapse_2_${customer_id}" data-toggle="collapse" data-parent="#accordion_${customer_id}" class="accordion-toggle goodfont" data-ar="الحسابات" data-en="Accounting" >Accounting </a>
+					</div>
+					<div class="accordion-body collapse " id="collapse_2_${customer_id}">
+						<div class="accordion-inner">
+
+							<div class="row-fluid">
+								<div class="span4" data-ar="الفرع" data-en="Branch" >
+									Branch
+								</div>
+								<div class="span8">
+									<select class="row-fluid" style="height: 30px;" id="accounting_branch_id_${customer_id}"></select>
+								</div>
+							</div>
+
+							<div class="row-fluid  ">
+								<div class="span4" data-ar="الموزع" data-en="Reseller Name">
+									Reseller Name
+								</div>
+								<div class="span8">
+									<select class="row-fluid edit-enabled Administrator Manager" style="height: 30px;" id="accounting_reseller_id_${customer_id}"></select>
+								</div>
+							</div>
+
+							
+							
+							<div class="row-fluid">
+								<div class="span4" data-ar="المبلغ المدفوع" data-en="Payment" >
+									Payment
+								</div>
+								<div class="span8">
+									<input class="row-fluid"  id='accounting_payment_${customer_id}' style="height: 30px;" type="text" value="${accounting_payment}"/>
+								</div>
+							</div>
+							<div class="row-fluid">
+								<div class="span4" data-ar="المبلغ المتبقى" data-en="Remaining Payment">
+									Remaining Payment
+								</div>
+								<div class="span8">
+									<input class="row-fluid" id='accounting_remaining_payment_${customer_id}' style="height: 30px;" type="text" value="${accounting_remaining_payment}"/>
+								</div>
+							</div>
+							<div class="row-fluid">
+								<div class="span4" data-ar="يوم الدفع الشهرى" data-en="Payment Day">
+									Payment Day 
+								</div>
+								<div class="span8">
+									<input class="row-fluid"  id='accounting_payment_day_${customer_id}' style="height: 30px;" type="text" value="${accounting_payment_day}"/>
+								</div>
+							</div>
+							
+							<div class="row-fluid">
+								<div class="span4" data-ar="فترة السماح" data-en="Period For Payment">
+									Period For Payment
+								</div>
+								<div class="span8">
+									<input class="row-fluid"  id='accounting_payment_Period_${customer_id}' style="height: 30px;" type="text" value="${accounting_payment_Period}"/>
+								</div>
+							</div>
+
+							<div class="row-fluid">
+								<div class="span4"data-ar="فترة التنبيه" data-en="Warning Days" >
+									Warning Days
+								</div>
+								<div class="span8">
+									<input class="row-fluid"  id='accounting_warning_day_${customer_id}' style="height: 30px;" type="text" value="${accounting_warning_day}"/>
+								</div>
+							</div>
+
+							<div class="row-fluid">
+								<div class="span4" data-ar="تارخ التعاقد" data-en="Contact Date" >
+									Contact Date
+								</div>
+								<div class="span8 ">
+								
+									<input class="row-fluid"  id='accounting_contract_day_${customer_id}' style="height: 30px;" type="text" value="${accounting_contract_day}"/>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+
+
+				<div class="accordion-group" onclick="__.showFiles('${customer_id}');">
+					<div class="accordion-heading">
+						<a href="#collapse_6_${customer_id}" data-toggle="collapse" data-parent="#accordion_${customer_id}" class="accordion-toggle goodfont" data-ar="الملفات" data-en="Files" >Files</a>
+					</div>
+					<div class="accordion-body collapse " id="collapse_6_${customer_id}">
+						<div class="accordion-inner">
+
+							<span class="btn btn-success fileinput-button security-enabled Administrator Manager Reseller Employee"> <i class="glyphicon glyphicon-plus"></i> <span data-ar="إضافة البطاقة" data-en="ADD ID..." >ADD ID...</span> 
+								<input class="fileupload" id="fileupload_1_${customer_id}" onclick="__.upload('${customer_id}' , 1);" type="file" name="files[]" multiple>
+							</span>
+							<br>
+							<br>
+							<span class="btn btn-success fileinput-button security-enabled Administrator Manager Reseller Employee"> <i class="glyphicon glyphicon-plus"></i> <span data-ar="إضافة اقرار" data-en="ADD Approval..." >ADD Approval...</span> 
+								<input class="fileupload" id="fileupload_2_${customer_id}" onclick="__.upload('${customer_id}' , 2);" type="file" name="files[]" multiple>
+							</span>
+							<br>
+							<br>
+							<span class="btn btn-success fileinput-button security-enabled Administrator Manager Reseller Employee"> <i class="glyphicon glyphicon-plus"></i> <span data-ar="إضافة ملفات اخرى" data-en="ADD Other..." >ADD Other...</span> 
+								<input class="fileupload" id="fileupload_3_${customer_id}" onclick="__.upload('${customer_id}' , 3);" type="file" name="files[]" multiple>
+							</span>
+							<br>
+							
+							<br>
+							<div id="loading_${customer_id}" class="row-fluid"></div>
+
+							<!-- The container for the uploaded files -->
+							<div id="files_${customer_id}" class="files row-fluid"></div>
+							<br>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="accordion-group">
+					<div class="accordion-heading">
+						<a href="#collapse_5_${customer_id}" data-toggle="collapse" data-parent="#accordion_${customer_id}" class="accordion-toggle goodfont">Security Data</a>
+					</div>
+					<div class="accordion-body collapse " id="collapse_5_${customer_id}">
+						<div class="accordion-inner">
+							<div class="row-fluid">
+								<div class="span4">
+									Line User Name
+								</div>
+								<div class="span8">
+									<input class="row-fluid" id='security_line_username_${customer_id}' style="height: 30px;" type="text" value="${security_line_username}"/>
+								</div>
+							</div>
+							<div class="row-fluid">
+								<div class="span4">
+									Line Password
+								</div>
+								<div class="span8">
+									<input class="row-fluid" id='security_line_password_${customer_id}' style="height: 30px;" type="text" value="${security_line_password}"/>
+								</div>
+							</div>
+							<div class="row-fluid">
+								<div class="span4">
+									Router User Name
+								</div>
+								<div class="span8">
+									<input class="row-fluid" id='security_router_username_${customer_id}' style="height: 30px;" type="text" value="${security_router_username}"/>
+								</div>
+							</div>
+							<div class="row-fluid">
+								<div class="span4">
+									Router Password
+								</div>
+								<div class="span8">
+									<input class="row-fluid" id='security_router_password_${customer_id}' style="height: 30px;" type="text" value="${security_router_password}"/>
+								</div>
+							</div>
+							<div class="row-fluid">
+								<div class="span4">
+									Router Wireless
+								</div>
+								<div class="span8">
+									<input class="row-fluid" id='security_router_wireless_${customer_id}' style="height: 30px;" type="text" value="${security_router_wireless}"/>
+								</div>
+							</div>
+							<div class="row-fluid">
+								<div class="span4">
+									Router Serial
+								</div>
+								<div class="span8">
+									<input class="row-fluid" id='security_router_serial_${customer_id}' style="height: 30px;" type="text" value="${security_router_serial}"/>
+								</div>
+							</div>
+							<div class="row-fluid">
+								<div class="span4">
+									Flasha Serial
+								</div>
+								<div class="span8">
+									<input class="row-fluid" id='security_flasha_serial_${customer_id}' style="height: 30px;" type="text" value="${security_flasha_serial}"/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="accordion-group" onclick="__.customer.showRequestes('${customer_id}');">
+					<div class="accordion-heading">
+						<a href="#collapse_7_${customer_id}" data-toggle="collapse" data-parent="#accordion_${customer_id}" class="accordion-toggle goodfont">Requestes</a>
+					</div>
+					<div class="accordion-body collapse " id="collapse_7_${customer_id}">
+						<div class="accordion-inner">
+
+							<div id="requestes_${customer_id}" class="files row-fluid"></div>
+							<br>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row-fluid">
+				<div class="span4">
+					Status
+				</div>
+				<div class="span8">
+					<select class="row-fluid" id='contract_approved_${customer_id}' style="height: 30px;" >
+						<option>__Pending</option>
+						<option class="security-enabled Administrator Manager">__Approved</option>
+						<option class="security-enabled Administrator Manager">__Problem</option>
+						<option>__Cancel</option>
+					</select>
+				</div>
+			</div>
+
+			<hr>
+			<div class="row-fluid">
+				<a class="btn btn-info security-enabled Administrator Manager Reseller Employee" onclick="__.customer.doUpdate(${
+				customer_id
+				}
+				);">Save</a>
+				<a class="btn btn-info security-enabled Administrator Manager Reseller Employee" onclick="__.customer.doDelete(${
+				customer_id
+				}
+				);">Delete</a>
+
+			</div>
+
+			<div id="customerdetailsinfotxt_${customer_id}" class="row-fluid" style="color: red;font-weight: bold;">
+
+			</div>
+		</div>
+
+	</div>
+	<br>
+</div>
