@@ -1,0 +1,84 @@
+﻿<script id="facebook-groups-tmp" type="text/x-jquery-tmpl">
+
+
+
+    <div class="row-fluid shadow" style="padding:10px;">
+
+        <div class="span12">
+
+            <div class="span9  status">
+                
+                
+              
+                  <div class=" row-fluid face_fromname"><a href="http://facebook.com/${id}" target="_blank">${name}</a></div>
+                 <div class=" row-fluid">${id}</div>
+             
+                
+
+            </div>
+
+            <div class="span3">
+                <img class="face_img" src="https://graph.facebook.com/${id}/picture?type=square" />
+            </div>
+
+        </div>
+     <a onClick="loadmyfacebookfeeds('${id}');$('html, body').animate({ scrollTop: 0 }, 'fast');" >حائط الجروب </a>
+    </div>
+
+    <hr>
+
+
+</script>
+
+
+
+
+<div class="row-fluid  ">
+    <div  id="facebook-groups"  style="direction:rtl"></div>
+
+</div>
+  
+
+<script>
+    $(document).ready(function () {
+        
+    });
+    var _mainurl = ""; //"http://shareournews.byethost32.com";
+
+
+
+    function loadfacebookgroups() {
+
+        var accesstoken = getParameterByName('accesstoken');
+
+        if (accesstoken == null) return;
+         $('#div_controls').hide();
+            $("#divcontent1").html('');
+               $('#TT_info').html('جارى التحميل ....');
+
+        var _url = "http://webservices.egtema3y.com/getfacegroups.php?accesstoken=" + accesstoken;
+        console.log("call service : " + _url);
+
+        $.getJSON(_url, function (data) {
+            var infos = [];
+
+            $.each(data.infos, function () {
+                infos.push(this);
+            }
+
+        );
+
+            var count = infos.length;
+            $('#TT_info').html(' عدد الجروبات '+ ' = ' + count + '  ')
+             $('#div_controls').show();
+            $('#facebook-groups-tmp').tmpl(infos).appendTo($("#divcontent1"));
+
+
+        });
+    }
+    function clearfacebookgroupsdiv() {
+        $("#facebook-groups").html('');
+    }
+
+ 
+</script>

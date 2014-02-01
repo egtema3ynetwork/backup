@@ -1,0 +1,135 @@
+<script id="chatroomview-tmp" type="text/x-jquery-tmpl">
+
+    <div class="span4 shadow" style="margin:5px;">
+    <center>
+    <div class="row-fluid" style="margin:5px;">
+    ${name}
+    </div>
+
+    <div class="row-fluid" style="margin:5px;">
+
+
+    <img class="face_img" src="../img/chat.png"/>
+
+
+    </div>
+    <div class="row-fluid" style="margin:5px;">
+    <a class="btn btn-info" onclick="openchatroom(${id},'${password}');" target="_blank" >
+    انضم للشات
+    </a><br><br>
+
+    <div class="row-fluid">
+    كلمة المرور :
+    <input type="password" id="password_${id}" value="${freepassword}" />
+    <input type="hidden" id="hidden_${id}" value="${password}"/>
+    </div>
+
+    <div id="info_${id}" class="label label-important"></div>
+
+    </div>
+    </center>
+    </div>
+
+</script>
+
+
+<center>
+    <a class="label label-info" href="http://78.46.224.126/sites/chat/register.php"> سجل دخولك باستخدام حساب الفيسبوك اولا قبل الانضمام الى غرفة الشات</a>
+    <br><strong>شات إجتماعى هو شات أمن محمى بكلمة مرور - أحصل على غرفتك للشات الان</strong>
+    الغرف العامة المسموح دخولها لاى احد سوف تفتح معك اوتوماتك
+
+</center>
+
+
+<hr>
+<div class="row-fluid  ">
+    <div id="chatroomview"  style="direction:rtl"></div>
+
+</div>
+<hr>
+
+<center>
+    <div>
+        <p style="font-size: x-large;height: 25px;">  شبكة إجتماعى أول شبكة عربية للتواصل الإجتماعى </p>
+
+
+
+
+        <p style="font-size: medium;" class="label label-warning"> لطلبات الاشتراك والتواصل عبر البريد الالكترونى أو الهاتف من داخل مصر</p>
+
+        <p class="label label-success">   Egtema3yNetwork@Gmail.Com</p>
+        <p class="label label-success"> 01122354855</p>
+        <p class="label label-success"> 01009526580</p>
+    </div>
+</center>
+<hr>
+<center>
+    <div id="app_price" style="width: 90%;text-align: center; ">
+
+        <div class="row-fluid"  style="padding: 5px;">
+            <div class="span3 label label-inverse">قيمة الاشتراك</div>
+            <div class="span3 label label-inverse"> مدة الاشتراك</div>
+            <div class="span6 label label-inverse">نوع الاشتراك</div>
+        </div>
+
+        <div class="row-fluid" style="padding: 5px;">
+            <div style="font-size: medium;" class="span3 label label-inverse">100 جنية</div>
+            <div style="font-size: medium;" class="span3 label label-inverse">عام كامل</div>
+            <div style="font-size: medium;" class="span6 label label-inverse">متعدد المستخدمين - غرفة محمية بكلمة سر أو بدون</div>
+        </div>
+    </div>
+</center>
+
+
+<hr>
+<script>
+    $(document).ready(function () {
+    loadchatroomview();
+
+    });
+    var _mainurl = ""; //"http://shareournews.byethost32.com";
+
+    function openchatroom(id, password) {
+    $('#info_'+id).html('جارى التحميل ...')
+    var url = "http://chat.egtema3y.com/chatmessages.php?roomid=" + id + "&key=" + password;
+    var p1 = $('#password_' + id).val();
+    var p2 = $('#hidden_' + id).val();
+
+    if ($.base64.encode(p1) == p2) {
+    window.location.href = url ;
+    }
+    else {
+    $('#info_'+id).html('كلمة المرور غير صحيحة')
+    }
+    }
+
+    function loadchatroomview() {
+
+
+
+    var _url = _mainurl + 'http://webservices.egtema3y.com/get.php?object=chat.room&limit=40&sort=freepassword desc ';
+    log("call service : " + _url);
+
+    $.getJSON(_url, function (data) {
+    var tweets = [];
+
+    $.each(data.data, function () {
+    this.password = $.base64.encode(this.password);
+    tweets.push(this);
+    }
+
+    );
+
+
+    $('#chatroomview-tmp').tmpl(tweets).appendTo($("#chatroomview"));
+
+
+    });
+    }
+    function clearchatroomviewdiv() {
+    $("#chatroomview").html('');
+    }
+
+
+
+</script>

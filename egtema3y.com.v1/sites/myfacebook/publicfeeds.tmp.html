@@ -1,0 +1,241 @@
+<script id="face-feed-tmp" type="text/x-jquery-tmpl">
+
+
+
+
+
+  
+
+
+    <div class="row-fluid " style="padding: 10px;">
+
+        <div class="span12">
+
+            <div class="container-fluid span11">
+
+                <div class="row-fluid ">
+                    <div class="span12">
+
+
+
+                        <div class="span12  status">
+                            <table style="width: 100%">
+                                <tr>
+                                    <td>
+
+                                       
+                                            <span class="face_fromname ">${wallname}</span>
+
+                                      
+                                    </td>
+                                    <td style="vertical-align: top;">
+                                      
+                                    </td>
+
+                                </tr>
+                            </table>
+
+
+                            <div class="message face_message " style="color: green">{{html postmessage2}}</div>
+                            <div class="message face_message" style="text-align: justify; display: block">{{html postmessage}}</div>
+
+
+                            <div class="face_attachment">
+                                {{if postimage}}
+
+    <a href="${postlinkurl}" target="_blank" ><img class="picture" src="${postimage}" style="position: relative" /></a>
+                                {{/if}}
+    <div class="face_attachment-data">
+        <div class="face_name"><a href="${postlinkurl}" target="_blank"  title="${postlinkurl}" >${postlinkname}</a></div>
+        <div class="face_caption">{{html postcaption}}</div>
+        <div class="face_description face_message">{{html postdescription}}</div>
+    </div>
+                            </div>
+
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="span1">
+                <img class="face_img" src="${wallimageurl}" />
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+ 
+
+
+    <hr>
+</script>
+
+
+
+    <div id="facebook-feed" style="direction: rtl;"></div>
+
+
+
+<script>
+    var _mainurl = ""; //"http://shareournews.byethost32.com";
+
+    function loadpublicfacebookfeeds(tags) {
+        $('#TT_info').html('جارى التحميل ....');
+        $('#div_controls').hide();
+        $("#divcontent1").html('');
+
+        loadfacebookfeeds(0, '',null,tags);
+
+    };
+
+
+
+    function loadfacebookfeeds(start, posttype, maxtime,tags) {
+
+        $('.btn_more').html('جارى التحميل ...');
+        $('<div class=" loadtxt span6 offset3"> ' + 'جارى تحميل البيانات من فضلك انتظر قليلا ...' + ' </div>').appendTo($("#facebook-feed"));
+
+
+        var id = getParameterByName("id");
+        var search = getParameterByName("search");
+        var publicview = getParameterByName("publicview");
+       
+        var postid = getParameterByName("postid");
+        var wallid = getParameterByName("wallid");
+        var start2 = getParameterByName("start2");
+        if (start2 !== '' & start === 0) {
+            start = parseInt(start2);
+        }
+        if (posttype === '') {
+            posttype = getParameterByName("posttype");
+        }
+
+
+        var _url = _mainurl + 'http://178.63.108.123/api/get.php?object=facebook&_fullinfo=yes&sort=time desc&wallid=' + wallid + '&postid=' + postid + '&posttype=' + posttype + '&id=' + id + '&start=' + start + '&search=' + search + '&tags=' + tags + '&maxtime=' + maxtime + '&publicview=' + publicview; //'/egtema3ynetwork/php/service/face/get-face-service.php?postid=' + postid +'&wallid=' + pageid +'&walltypeid=' + walltypeid + '&start=' + start; //'https://api.twitter.com/1/statuses/user_timeline/MuhammadMorsi.json?callback=?&count=5';
+        console.log("call service : " + _url);
+        $.getJSON(_url, function (data) {
+            var faces = [];
+
+            $.each(data.data, function () {
+                this.wallimageurl = "https://graph.facebook.com/" + this.wallid + "/picture?type=square";
+              
+                this.postmessage = urlHyperlinks(this.postmessage);
+                this.postmessage2 = urlHyperlinks(this.postmessage2);
+                this.postcaption = urlHyperlinks(this.postcaption);
+                this.postdescription = urlHyperlinks(this.postdescription);
+
+                faces.push(this);
+            }
+
+            );
+            start += faces.length;
+            if (faces.length == 1) {
+                $('title').html($('title').html() + ' # ' + faces[0].postmessage);
+            }
+            if (undefined == maxtime) {
+                start = 0;
+            }
+            maxtime = data.mintime;
+            var maxid = data.lastid;
+
+            $('.btn_more').hide('slow');
+            $('.loadtxt').hide();
+            $('#face-feed-tmp').tmpl(faces).appendTo($("#divcontent1"));
+
+
+
+            if (faces.length > 0) {
+                $("#divcontent1").append('<hr><center><button class="span8 offset2 btn-inverse btn_more shadow " onclick="loadfacebookfeeds(' + start + ',\'' + posttype + '\',\'' + maxtime + '\',\'' + tags + '\');">اعرض المزيد من البوستات</button></center>');
+            }
+
+            $('#div_controls').show();
+            $('#TT_info').html('أخر الاخبار المتداولة على الفيسبوك');
+
+            if (start > 30) {
+                $("body").scrollTop($("body").scrollTop() + 200);
+            }
+
+        });
+    }
+
+    function clearfacebookdiv() {
+        $("#facebook-feed").html('');
+    }
+
+    function urlHyperlinks(str) {
+        if (str === null)
+            return null;
+        var str2 = str;
+
+        str2 = str.replace(/\b((http|https|ftp):\/\/\S+)/g, '<a href="$1" target="_blank">$1</a>');
+
+        if (str2 === str) {
+            str2 = str.replace(/\b((www)\.\S+)/g, '<a href="http://$1" target="_blank">$1</a>');
+        }
+
+        str2 = str2.replace('\n', '          ');
+
+
+        return str2;
+    }
+
+    function relativeTime(delta) {
+
+        delta = (delta * 1000) - (2 * 60 * 60 * 1000); //-> ms
+
+        if (delta <= 10000) {   // Less than 10 seconds ago
+            return 'منذ قليل';
+        }
+
+        var units = null;
+
+        var conversions = {
+            millisecond: 1, // ms -> ms
+            ثانية: 1000, // ms -> sec
+            دقيقة: 60, // sec -> min
+            ساعة: 60, // min -> hour
+            يوم: 24, // hour -> day
+            شهر: 30, // day -> month (roughly)
+            سنة: 12         // month -> year
+        };
+
+        for (var key in conversions) {
+            if (delta < conversions[key]) {
+                break;
+            }
+            else {
+                units = key;
+                delta = delta / conversions[key];
+            }
+        }
+
+        // Pluralize if necessary:
+
+        delta = Math.floor(delta);
+        //if ( delta !== 1 ) { units += 's'; }
+
+        return [" منذ ", delta, units].join(' ');
+
+    }
+
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+        var regexS = "[\\?&]" + name + "=([^&#]*)";
+        var regex = new RegExp(regexS);
+        var results = regex.exec(window.location.search);
+        if (results == null) {
+            ////console.log(name + " parameter not found");
+            return "";
+        }
+        else
+            return decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+</script>

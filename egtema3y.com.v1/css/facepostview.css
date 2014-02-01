@@ -1,0 +1,14 @@
+﻿body {
+}
+
+.face_controlpanel {
+    visibility: hidden;
+}
+
+.btn_more {
+    visibility: hidden;
+}
+
+.form-search {
+    visibility:hidden;
+}

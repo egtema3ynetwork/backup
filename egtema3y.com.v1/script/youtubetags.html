@@ -1,0 +1,53 @@
+<script id="youtubetags-tmp" type="text/x-jquery-tmpl">
+
+   
+       
+    <div  style="padding:5px;margin:5px;width:80%;">
+           <a href="../page/youtube.php?tags=${tags}" class="btn btn-danger shadow" style="width:100%;text-align: right;" >
+                
+               ${name}<img src="../img/youtube.ico"  style="margin:0px 0 0 5px;width:24px;height:24px;"/>
+        </a>
+    
+ </div>
+ 
+   
+</script>
+
+<center>
+<div >
+    <div id="youtubetags-div" ></div>
+</div>
+ </center>
+
+
+<script>
+    var _mainurl ="" ;//"http://shareournews.byethost32.com";
+
+    $( document ).ready( function ()
+    {
+        youtubetags();
+    } );
+    
+    function youtubetags()
+    {
+        
+        var _url = _mainurl + '../api/get.php?object=youtubetags';
+        //console.log( _url );
+        $.getJSON( _url, function ( data )
+        {
+            var types = [];
+            $.each( data, function ()
+            {
+                types.push( this );
+            });
+
+            $( '#youtubetags-tmp' ).tmpl( types ).appendTo( $( "#youtubetags-div" ) );
+           // $( '[data-toggle="tooltip"]' ).tooltip(); // must to show tootip style
+            
+
+        } );
+    }
+
+</script>
+
+

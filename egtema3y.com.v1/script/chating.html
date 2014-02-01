@@ -1,0 +1,224 @@
+<script id="chating-tmp" type="text/x-jquery-tmpl">
+  
+  <div class="row-fluid" style="direction:rtl;" >
+   
+       <div class="span2" style="visibility: collapse;">${timeago}</div>
+     <div class="span7" style="text-align:right;vertical-align:bottom;">${message}</div>
+    <div class=" span3 " >
+     <img class="face_img" src="https://graph.facebook.com/${fromimageurl}/picture?type=square" style="width: 38px;height: 38px;margin:5px;"/>
+  <strong>  ${fromname} </strong>
+    </div>
+
+    </div>
+</script>
+
+
+
+<div class="row-fluid shadow " style="direction:rtl;">
+    <div class="row-fluid">
+    <strong>شات إجتماعى هو شات أمن محمى بكلمة مرور - أحصل على غرفتك للشات الان</strong><hr>
+     
+    </div>
+
+    <div id="chating" class="row-fluid" ></div>
+    <hr>
+    <div id="sendmessagediv" class="row-fluid" >
+ 
+    <div class="span9">
+    <input type="text" id="messagetxt" style="width: 100%;height:40px;" />
+    </div>
+           <div class="span2">
+               <a class="btn btn-primary" onclick="sendchatmessage();">إرسال</a><br>
+              
+           </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        loadchating(0);
+        var t = setInterval(autoloadingmessage, 2000);
+        $('#messagetxt').bind('keypress', function (e) {
+            if (e.keyCode == 13) {
+                sendchatmessage();
+            }
+        });
+
+    });
+    var _mainurl = ""; //"http://shareournews.byethost32.com";
+
+    function autoloadingmessage() {
+
+
+        var minid = getCookie("lastmessageid");
+        // console.log("call method : autoloadingmessage " + minid);
+        if (minid > 0) {
+            loadchating(minid);
+        }
+
+
+    }
+
+    function sendchatmessage() {
+
+        var username = getCookie("username");
+        if (username != null && username != "") {
+
+            var msg = $('#messagetxt').val();
+            if (msg == "" || msg === "" || msg == null || msg === null) {
+                return;
+            }
+            var wallid = getParameterByName('wallid');
+            var tags = getParameterByName('tags');
+            var fromid = getCookie("id");
+            var fromname = getCookie("username");
+            var fromimageurl = getCookie("userimageurl");
+
+            $('#messagetxt').val('');
+
+            var _url = _mainurl + '../api/add.php?object=chating&_fullinfo=yes&wallid=' + wallid + '&msg=' + msg + '&fromid=' + fromid + '&fromname=' + fromname + '&fromimageurl=' + fromimageurl + '&tags=' + tags;
+            $.getJSON(_url, function (data) {
+
+            });
+        }
+        else {
+            $("#chating").append('<div class="row-fluid" ><a href="../facebook/index.php"  style="font-size:small;background-color:white;" class="btn-primary  shadow " id="loginbutton2" >   تسجيل الدخول بحساب الفيسبوك  </a></div><hr>');
+            $("#sendmessagediv").hide();
+
+            $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+        }
+
+    }
+    function loadchating(minid) {
+        var wallid = getParameterByName('wallid');
+        var tags = getParameterByName('tags');
+        var username = getCookie("username");
+        if (username != null && username != "") {
+            var _url = _mainurl + '../api/get.php?object=chating&_fullinfo=yes&limit=40&sort=id desc &wallid=' + wallid + '&minid=' + minid + '&tags=' + tags;
+            // console.log("call service : " + _url);
+
+
+            $.getJSON(_url, function (data) {
+                var tweets = [];
+                var maxtime = data.mintime;
+                minid = data.firstid;
+                if (minid > 0) {
+                    setCookie("lastmessageid", minid, 365);
+                }
+                $.each(data.data, function () {
+                    this.timeago = relativeTime(this.timeago);
+                    tweets.push(this);
+                }
+
+                );
+
+                tweets.sort(function (a, b) { return a.id - b.id });
+
+                //start += tweets.length;
+                //  $('.btn_more_chating-user-min').hide('slow');
+
+                $('#chating-tmp').tmpl(tweets).appendTo($("#chating"));
+
+
+
+                // $( '[data-toggle="tooltip"]' ).tooltip(); // must to show tootip style
+                if (tweets.length > 0) {
+                    $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+                    // $("#chating-user-min").append('<button class="span8 offset2 btn-success btn_more_chating-user-min" onclick="loadchatingusermin(' + start + ',\'' + posttype + '\');"> تم عرض  ' + start + ' صفحة حتى الان  - اعرض المزيد</button>');
+                }
+                //if (start > 30) {
+                //  $("body").scrollTop($("body").scrollTop() + 200);
+                // }
+
+            });
+        }
+        else {
+            $("#chating").append('<div class="row-fluid" ><a href="../facebook/index.php"  style="font-size:small;background-color:white;" class="btn-primary  shadow " id="loginbutton2" >   تسجيل الدخول بحساب الفيسبوك  </a></div><hr>');
+
+            $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+        }
+    }
+    function clearchatingusermindiv() {
+        $("#chating").html('');
+    }
+
+
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+        var regexS = "[\\?&]" + name + "=([^&#]*)";
+        var regex = new RegExp(regexS);
+        var results = regex.exec(window.location.search);
+        if (results == null) {
+            ////console.log(name + " parameter not found");
+            return "";
+        }
+        else
+            return decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+    function relativeTime(delta) {
+
+        delta = (delta * 1000) - (2 * 60 * 60 * 1000); //-> ms
+
+        if (delta <= 10000) {   // Less than 10 seconds ago
+            return 'منذ قليل';
+        }
+
+        var units = null;
+
+        var conversions = {
+            millisecond: 1, // ms -> ms
+            ثانية: 1000, // ms -> sec
+            دقيقة: 60, // sec -> min
+            ساعة: 60, // min -> hour
+            يوم: 24, // hour -> day
+            شهر: 30, // day -> month (roughly)
+            سنة: 12         // month -> year
+        };
+
+        for (var key in conversions) {
+            if (delta < conversions[key]) {
+                break;
+            }
+            else {
+                units = key;
+                delta = delta / conversions[key];
+            }
+        }
+
+        // Pluralize if necessary:
+
+        delta = Math.floor(delta);
+        //if ( delta !== 1 ) { units += 's'; }
+
+        return [" منذ ", delta, units].join(' ');
+
+    }
+
+    function setCookie(c_name, value, exdays) {
+        var exdate = new Date();
+        exdate.setDate(exdate.getDate() + exdays);
+        var c_value = escape(value) + ((exdays == null) ? "" : "; expires=" + exdate.toUTCString());
+        document.cookie = c_name + "=" + c_value;
+    }
+    function getCookie(c_name) {
+        var c_value = document.cookie;
+        var c_start = c_value.indexOf(" " + c_name + "=");
+        if (c_start == -1) {
+            c_start = c_value.indexOf(c_name + "=");
+        }
+        if (c_start == -1) {
+            c_value = null;
+        }
+        else {
+            c_start = c_value.indexOf("=", c_start) + 1;
+            var c_end = c_value.indexOf(";", c_start);
+            if (c_end == -1) {
+                c_end = c_value.length;
+            }
+            c_value = unescape(c_value.substring(c_start, c_end));
+        }
+        return c_value;
+    }
+</script>

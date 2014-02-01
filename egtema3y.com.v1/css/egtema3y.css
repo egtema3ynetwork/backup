@@ -1,0 +1,184 @@
+
+
+body {
+    /*direction:rtl;*/
+    font-family: 'lucida grande',tahoma,verdana,arial,sans-serif;
+    font-size: smaller;
+    margin: 10px;
+    background: #fff;
+    color: #333;
+    line-height: 1.28;
+    padding: 10;
+    text-align: right;
+   
+    unicode-bidi: embed;
+}
+
+.topbar {
+    border: thin solid #333;
+    padding: 5px;
+    
+    position: fixed;
+    height: 35px;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    z-index: 1000;
+    display: block;
+    color: #FFFFFF;
+    font-size: large;
+}
+
+.gototop {
+    
+    position: fixed;
+   
+    top: 100px;
+    left: 100px;
+             display: block;
+    z-index: 10000;
+   
+   
+}
+
+.topactions {
+   
+    padding: 1px;
+    background-color:transparent;
+    position: fixed;
+    height: 50px;
+    top:  35px;
+   
+    z-index: 1000;
+    display: block;
+    color: #FFFFFF;
+    font-size: medium;
+}
+
+.navmenu {
+   
+    padding: 5px;
+    position: absolute;
+    top: 65px;
+    width:200;
+    background-color: transparent;
+    right: 10;
+    z-index: 0;
+    display: block;
+    color: #000;
+    font-size: small;
+    z-index: 100;
+
+}
+
+.statusbar {
+    border: thin solid white;
+    padding: 1px;
+    background-color: white;
+    position: fixed;
+    height: 20px;
+    right: 0px;
+    left: 0px;
+    z-index: 1000;
+    display: block;
+    bottom: 0px;
+    color: white;
+}
+
+.option-btn {
+  
+    padding: 1px;
+    background-color:transparent;
+    position: fixed;
+  
+    font-size: small;
+    left:  5px;
+    z-index: 1000;
+    display: block;
+    bottom: 40px;
+   
+}
+
+
+.face_fromname {
+    font-size: large;
+    color: #0000FF;
+    font-weight: bold;
+    font-family: lucida grande,tahoma,verdana,arial,sans-serif;
+}
+
+.face_message {
+    font-size: large;
+    margin: 0 0 5px 0;
+    display: block;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.face_img {
+  width: 48px;
+height: 48px;
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+    border: 0;
+    -moz-box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+}
+
+.read-more {
+    font-weight: bold;
+    color: #800000;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.shadow {
+    padding: 5px;
+    -moz-box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+
+    -webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+
+}
+
+
+
+/* Start by setting display:none to make this hidden.
+   Then we position it in relation to the viewport window
+   with position:fixed. Width, height, top and left speak
+   speak for themselves. Background we set to 80% white with
+   our animation centered, and no-repeating */
+.loadingimg {
+display:    none;
+position:   fixed;
+z-index:    100000;
+top:        0;
+left:       0;
+height:     100%;
+width:      100%;
+background: rgba( 255, 255, 255, .8 ) 
+            url('http://i.stack.imgur.com/FhHRx.gif') 
+            50% 50% 
+            no-repeat;
+opacity: 0.80;
+-ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity = 80);
+filter: alpha(opacity = 80);
+}
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+body.loading {
+    overflow: hidden;   
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+body.loading .loadingimg {
+    display: block;
+}

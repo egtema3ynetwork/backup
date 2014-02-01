@@ -1,0 +1,202 @@
+﻿<script id="twitter-user-tmp" type="text/x-jquery-tmpl">
+    <div class="btn-info shadow" style="height:1px"></div>
+    <div class="row-fluid " style="padding:10px;">
+    <div class="span12">
+
+    <div class="span11  status">
+
+    <table style="width: 100%">
+    <tr>
+    <td>
+
+    <a href="../page/twitterwallview.php?wallid=${twitterscreenname}&tags=${tags}" target="_blank" >
+    <div class="face_fromname">${twittername}</div>
+    </a>
+    </td>
+         <td>
+            <input id="txt_tags_${twitterscreenname}" type="text" value="${tags}"/>
+			<input id="txt_publicview_${twitterscreenname}" type="text" value="${publicview}"/>
+             <a id="savetags_${twitterscreenname}" class="btn btn-info" onclick="savetwitteruserbyid('${twitterscreenname}');">Save</a>
+
+        </td>
+    <td style="vertical-align: top;">
+    <div style="font-size: x-small; color: #C0C0C0; text-align: left;">${timeago}</div>
+    </td>
+
+    </tr>
+    </table>
+
+    </div>
+
+    <div class="span1">
+    <img class="face_img" src="${twitterimageurl}" />
+    </div>
+
+    </div>
+
+
+    </div>
+     <div class="row-fluid">
+            <div class="control-group warning ">
+              <a  class="btn btn-primary" onclick="autoupdatetwitteruserbyid('${twitterscreenname}');">Auto Update Twitter User </a>
+              <span id="autoupdatetwitter_${twitterscreenname}" >Click To Run Twitter User Auto Update Feeds</span>
+          </div>
+          </div>
+    <a id="deletetwitter_${twitterscreenname}"  class="btn btn-danger" onclick="deletetwitteruserbyid('${twitterscreenname}');">Delete Twitter User </a>
+   
+    <hr />
+
+
+</script>
+
+
+
+<div class="row-fluid  ">
+    <div id="twitter-user"  style="direction:rtl"></div>
+
+</div>
+
+
+<script>
+    $(document).ready(function()
+    {
+        loadtwitteruser(0, '');
+    });
+    var _mainurl = "";//"http://shareournews.byethost32.com";
+
+
+
+    function loadtwitteruser(start, posttype)
+    {
+
+        $('.btn_more_twitter-user').html('جارى التحميل ...');
+
+        var id = getParameterByName("id");
+        var postid = getParameterByName("postid");
+        var wallid = getParameterByName("wallid");
+        
+        var start2 = getParameterByName("start2");
+        if (start2 !== '' & start === 0)
+        {
+            start = parseInt(start2);
+        }
+        if (posttype === '')
+        {
+            posttype = getParameterByName("posttype");
+        }
+
+        var _url = _mainurl + '../api/get.php?object=twitteruser&_fullinfo=yes&sort=time desc &wallid=' + wallid + '&postid=' + postid + '&posttype=' + posttype + '&id=' + id + '&start=' + start;//'https://api.twitter.com/1/statuses/user_timeline/MuhammadMorsi.json?callback=?&count=5';
+        //console.log("call service : " + _url);
+
+        $.getJSON(_url, function(data)
+        {
+            var tweets = [];
+            var maxtime = data.mintime;
+            var maxid = data.lastid;
+
+            $.each(data.data, function()
+            {
+                this.timeago = relativeTime(this.timeago);
+                tweets.push(this);
+            }
+
+            );
+
+            start += tweets.length;
+            $('.btn_more_twitter-user').hide('slow');
+            $('#twitter-user-tmp').tmpl(tweets).appendTo($("#twitter-user"));
+            // $( '[data-toggle="tooltip"]' ).tooltip(); // must to show tootip style
+            if (tweets.length > 0) {
+                $("#twitter-user").append('<button class="span8 offset2 btn-success btn_more_twitter-user" onclick="loadtwitteruser(' + start + ',\'' + posttype + '\');"> تم عرض  ' + start + ' خبر حتى الان  - اعرض المزيد</button>');
+            }
+            if (start > 30) {
+                $("body").scrollTop($("body").scrollTop() + 200);
+            }
+
+        });
+    }
+    function cleartwitteruserdiv() {
+        $("#twitter-user").html('');
+    }
+
+    function urlHyperlinks(str)
+    {
+        if (str === null)
+            return null;
+        var str2 = str;
+
+
+        str2 = str.replace(/\b((http|https|ftp):\/\/\S+)/g, '<a href="$1" target="_blank">$1</a>');
+
+        if (str2 === str)
+        {
+            str2 = str.replace(/\b((www)\.\S+)/g, '<a href="http://$1" target="_blank">$1</a>');
+        }
+
+        str2 = str2.replace('\n', '          ');
+        //str2 = str2.replace(/\b#\S+/g, '<a href="https://twitter.com/search?q=$1" target="_blank">$1</a>');
+
+
+        return str2;
+    }
+
+    function relativeTime(delta)
+    {
+
+        delta = (delta * 1000);// - (2 * 60 *60 * 1000 ); //-> ms
+
+        if (delta <= 10000)
+        {	// Less than 10 seconds ago
+            return 'منذ قليل';
+        }
+
+        var units = null;
+
+        var conversions = {
+            millisecond: 1, // ms -> ms
+            ثانية: 1000, // ms -> sec
+            دقيقة: 60, // sec -> min
+            ساعة: 60, // min -> hour
+            يوم: 24, // hour -> day
+            شهر: 30, // day -> month (roughly)
+            سنة: 12			// month -> year
+        };
+
+        for (var key in conversions)
+        {
+            if (delta < conversions[key])
+            {
+                break;
+            }
+            else
+            {
+                units = key;
+                delta = delta / conversions[key];
+            }
+        }
+
+        // Pluralize if necessary:
+
+        delta = Math.floor(delta);
+        //if ( delta !== 1 ) { units += 's'; }
+
+        return [" منذ ", delta, units].join(' ');
+
+    }
+
+    function getParameterByName(name)
+    {
+        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+        var regexS = "[\\?&]" + name + "=([^&#]*)";
+        var regex = new RegExp(regexS);
+        var results = regex.exec(window.location.search);
+        if (results == null)
+        {
+            ////console.log(name + " parameter not found");
+            return "";
+        }
+        else
+            return decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+</script>

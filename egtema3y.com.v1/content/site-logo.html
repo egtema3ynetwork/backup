@@ -1,0 +1,93 @@
+﻿<div class=" topbar btn-inverse">
+    <table style="width: 100%">
+        <tr >
+
+           
+            <td style="vertical-align: central; text-align: left; width:80%;font-size: larger">
+                  <div >
+        <div id="searchdiv" >
+            <input name="searchtxt" id="searchtxt" style="height: 24px;"  type="text" placeholder="بحث داخل البوستات والمقالات"  >
+             <a  onclick="startsearch();"><img src="../img/find.ico" style="width: 24px;height: 24px;" alt="بحث فى الفيسبوك وتويتر ويوتيوب" /></a>
+        </div>
+    </div>
+
+            </td>
+             <td  style="vertical-align: top; text-align: left; width:20%">
+                 <span  style="font-size: large; color: #FFFFFF; font-weight: normal; font-style: normal;">شبكة إجتماعى</span> <img src="../img/black-feed-icon.gif" style="width: 24px;height: 24px;" alt="أول شبكة عربية للتواصل الاجتماعى"  />
+            </td>
+            
+        </tr>
+    </table>
+ 
+
+           
+   
+                   
+
+</div>
+
+           
+<script>
+
+    $(document).ready(function () {
+        if (getParameterByName('tags') != '') {
+            //$('#searchdiv').show();
+        }
+        else {
+            //$('#searchdiv').hide();
+        }
+    });
+
+   
+
+    $('#searchtxt').bind('keypress', function (e) {
+        if (e.keyCode == 13) {
+	startsearch();
+            
+        }
+    });
+
+    function startsearch()
+    {
+	var username=getCookie("username");
+  if (!(username!=null && username!=""))
+  {
+ alert('يجب ان تسجل الدخول حتى تستفيد من هذه الخدمة');
+ return;
+  }
+  
+  
+ var p1 = window.location.protocol.replace("//","");
+ var p2 = window.location.host.replace("//","").replace("/","");
+ var p3 = window.location.pathname;
+ 
+         var newURL = p1 + "//" + (p2 + "/" + p3).replace("//","/");
+		 
+        var txt = $('#searchtxt').val();
+		if(getParameterByName('tags') > 0)
+		{
+		window.location.href = newURL + "?search=" + txt + '&tags=' + getParameterByName('tags') ;
+		}
+		else
+		{
+        window.location.href = newURL + "?search=" + txt ;
+		}
+    }
+
+
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+        var regexS = "[\\?&]" + name + "=([^&#]*)";
+        var regex = new RegExp(regexS);
+        var results = regex.exec(window.location.search);
+        if (results == null) {
+            //console.log(name + " parameter not found");
+            return "";
+        }
+        else
+            return decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+</script>
+
+

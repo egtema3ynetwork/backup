@@ -1,0 +1,144 @@
+<script id="chating-tmp" type="text/x-jquery-tmpl">
+
+    <div class="row-fluid" style="direction:rtl;" >
+
+
+    <div class="span8" style="text-align:right;vertical-align:bottom;">${message}</div>
+    <div class=" span4 " >
+    <img class="face_img" src="https://graph.facebook.com/${faceid}/picture?type=square" style="width: 38px;height: 38px;margin:5px;"/>
+    <strong>  ${fromname} </strong>
+    </div>
+
+    </div>
+</script>
+
+
+
+<div class="row-fluid shadow " style="direction:rtl;">
+    <div class="row-fluid">
+        <strong>شات إجتماعى هو شات أمن محمى بكلمة مرور - أحصل على غرفتك للشات الان</strong><hr>
+
+    </div>
+
+    <div id="chating" class="row-fluid" ></div>
+    <hr>
+    <div id="sendmessagediv" class="row-fluid" >
+
+        <div class="span9">
+            <input type="text" id="messagetxt" style="width: 100%;height:40px;" />
+        </div>
+        <div class="span2">
+            <a class="btn btn-primary" onclick="sendchatmessage();">إرسال</a><br>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+    setCookie("lastmessageid", 0, 365);
+    $('#sendmessagediv').hide();
+    loadchating(0);
+    var t = setInterval(autoloadingmessage, 2000);
+    $('#messagetxt').bind('keypress', function (e) {
+    if (e.keyCode == 13) {
+    sendchatmessage();
+    }
+    });
+
+    });
+    var _mainurl = ""; //"http://shareournews.byethost32.com";
+
+    function autoloadingmessage() {
+
+    var lastmessageid = getCookie("lastmessageid");
+    if (lastmessageid > 0) {
+    loadchating(lastmessageid);
+    }
+
+    }
+    function sendchatmessage() {
+
+    var username = getCookie("username");
+    if (username != null && username != "") {
+
+    var msg = $('#messagetxt').val();
+    if (msg == "" || msg === "" || msg == null || msg === null) {
+    return;
+    }
+    var roomid = getParameterByName('roomid');
+    var key = getParameterByName('key');
+    var fromid = getCookie("id");
+    var fromname = getCookie("username");
+    var faceid = getCookie("faceid");
+
+    $('#messagetxt').val('');
+
+    var _url = _mainurl + 'http://webservices.egtema3y.com/set.php?object=chat.message&roomid=' + roomid + '&msg=' + msg + '&fromid=' + fromid + '&fromname=' + fromname + '&faceid=' + faceid + '&key=' + key;
+    log(_url);
+    $.getJSON(_url, function (data) {
+
+    });
+    }
+    else {
+    $("#chating").append('<div class="row-fluid" ><a href="http://78.46.224.126/sites/chat/register.php?object=a7lachat"  style="font-size:small;background-color:white;" class="btn-primary  shadow " id="loginbutton2" >   تسجيل الدخول بحساب الفيسبوك  </a></div><hr>');
+    $("#sendmessagediv").hide();
+
+    $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+    }
+
+    }
+    function loadchating(lastmessageid) {
+    var roomid = getParameterByName('roomid');
+    var key = getParameterByName('key');
+    var username = getCookie("username");
+    if (username != null && username != "") {
+    var _url = _mainurl + 'http://webservices.egtema3y.com/get.php?object=chat.message&roomid=' + roomid + '&lastmessageid=' + lastmessageid + '&key=' + key;
+    log("call service : " + _url);
+
+
+    $.getJSON(_url, function (data) {
+    var tweets = [];
+
+
+
+    $.each(data.data, function () {
+    //this.timeago = relativeTime(this.timeago);
+    tweets.push(this);
+    }
+
+    );
+
+    tweets.sort(function (a, b) { return a.id - b.id });
+
+
+    $('#chating-tmp').tmpl(tweets).appendTo($("#chating"));
+
+    lastmessageid = data.lastmessageid;
+    if (lastmessageid > 0) {
+    setCookie("lastmessageid", lastmessageid, 365);
+    $('#sendmessagediv').show();
+    }
+
+
+    if (tweets.length > 0) {
+    $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+
+    }
+
+    });
+    }
+    else {
+    $("#chating").append('<div class="row-fluid" ><a href="http://78.46.224.126/sites/chat/register.php?object=a7lachat"  style="font-size:small;background-color:white;" class="btn-primary  shadow " id="loginbutton2" >   تسجيل الدخول بحساب الفيسبوك  </a></div><hr>');
+
+    $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+    }
+    }
+    function clearchatingusermindiv() {
+    $("#chating").html('');
+    }
+
+
+
+</script>

@@ -1,0 +1,214 @@
+﻿<script id="tweet-feed-tmp" type="text/x-jquery-tmpl">
+    <div class="btn-info shadow" style="height:1px"></div>
+
+    <div class="row-fluid " style="padding:10px;">
+    <div class="span12">
+
+    <div class="span11  status">
+
+    <table style="width: 100%">
+    <tr>
+    <td>
+
+    <a href="../page/twitterwallview.php?wallid=${wallid}&tags=${tags}" target="_blank" >
+    <div class="face_fromname">${wallname}</div>
+    </a>
+    </td>
+    <td style="vertical-align: top;">
+    <div style="font-size: x-small; color: #C0C0C0; text-align: left;">${timeago}</div>
+    </td>
+
+    </tr>
+    </table>
+
+
+
+    <p></p>
+    <p class="message face_message">{{html postmessage}}</p>
+    </div>
+
+    <div class="span1">
+    <img class="face_img" src="${wallimageurl}" />
+    </div>
+
+    </div>
+
+
+    </div>
+
+    <div  class="row-fluid " padding="10" marrgin="10">
+    <a href="../page/twitterpostview.php?postid=${postid}&tags=${tags}" target="_blank" class="btn btn-info  btn-small face_controlpanel"> 
+	تابع التعليقات وسجل اعجابك
+	</a>
+
+   
+
+
+    </div>
+
+    <hr />
+
+
+</script>
+
+
+
+<div class="row-fluid  ">
+    <div id="twitter-feed"  style="direction:rtl"></div>
+
+</div>
+
+
+<script>
+    $(document).ready(function()
+    {
+        loadtwitterfeeds(0, '');
+    });
+    var _mainurl = "";//"http://shareournews.byethost32.com";
+
+
+
+    function loadtwitterfeeds(start, posttype,maxtime)
+    {
+
+        $('.btn_more_twitter').html('جارى التحميل ...');
+        $('<div class=" loadtxt span6 offset3"> ' + 'جارى تحميل البيانات من فضلك انتظر قليلا ...' + ' </div>').appendTo($("#twitter-feed"));
+        var search = getParameterByName("search");
+		var publicview = getParameterByName("publicview");
+        var tags = getParameterByName("tags");
+        var id = getParameterByName("id");
+        var postid = getParameterByName("postid");
+        var wallid = getParameterByName("wallid");
+        
+        var start2 = getParameterByName("start2");
+        if (start2 !== '' & start === 0)
+        {
+            start = parseInt(start2);
+        }
+        if (posttype === '')
+        {
+            posttype = getParameterByName("posttype");
+        }
+
+        var _url = _mainurl + '../api/get.php?object=twitter&_fullinfo=yes&sort=time desc &wallid=' + wallid + '&postid=' + postid + '&posttype=' + posttype + '&id=' + id + '&start=' + start + '&search=' + search + '&tags=' + tags + '&maxtime=' + maxtime + '&publicview=' + publicview;//'https://api.twitter.com/1/statuses/user_timeline/MuhammadMorsi.json?callback=?&count=5';
+        //console.log("call service : " + _url);
+
+        $.getJSON(_url, function(data)
+        {
+            var tweets = [];
+            
+
+            $.each(data.data, function()
+            {
+                this.postmessage = urlHyperlinks(this.postmessage);
+                this.timeago = relativeTime(this.timeago);
+                tweets.push(this);
+            }
+
+            );
+
+            start += tweets.length;
+            if (undefined == maxtime) {
+                start = 0;
+            }
+            maxtime = data.mintime;
+            var maxid = data.lastid;
+
+            $('.btn_more_twitter').hide('slow');
+            $('.loadtxt').hide();
+            $('#tweet-feed-tmp').tmpl(tweets).appendTo($("#twitter-feed"));
+            // $( '[data-toggle="tooltip"]' ).tooltip(); // must to show tootip style
+            if (tweets.length > 0) {
+                $("#twitter-feed").append('<center><button class="span8 offset2 btn-success shadow btn_more_twitter" onclick="loadtwitterfeeds(' + start + ',\'' + posttype + '\',\'' + maxtime + '\');">اعرض المزيد من التويتات </button></center>');
+            }
+            if (start > 30) {
+                $("body").scrollTop($("body").scrollTop() + 200);
+            }
+
+        });
+    }
+    function cleartwitterdiv() {
+        $("#twitter-feed").html('');
+    }
+
+    function urlHyperlinks(str)
+    {
+        if (str === null)
+            return null;
+        var str2 = str;
+
+
+        str2 = str.replace(/\b((http|https|ftp):\/\/\S+)/g, '<a href="$1" target="_blank">$1</a>');
+
+        if (str2 === str)
+        {
+            str2 = str.replace(/\b((www)\.\S+)/g, '<a href="http://$1" target="_blank">$1</a>');
+        }
+
+        str2 = str2.replace('\n', '          ');
+        //str2 = str2.replace(/\b#\S+/g, '<a href="https://twitter.com/search?q=$1" target="_blank">$1</a>');
+
+
+        return str2;
+    }
+
+    function relativeTime(delta)
+    {
+
+        delta = (delta * 1000)- (2 * 60 *60 * 1000 ); //-> ms
+
+        if (delta <= 10000)
+        {	// Less than 10 seconds ago
+            return 'منذ قليل';
+        }
+
+        var units = null;
+
+        var conversions = {
+            millisecond: 1, // ms -> ms
+            ثانية: 1000, // ms -> sec
+            دقيقة: 60, // sec -> min
+            ساعة: 60, // min -> hour
+            يوم: 24, // hour -> day
+            شهر: 30, // day -> month (roughly)
+            سنة: 12			// month -> year
+        };
+
+        for (var key in conversions)
+        {
+            if (delta < conversions[key])
+            {
+                break;
+            }
+            else
+            {
+                units = key;
+                delta = delta / conversions[key];
+            }
+        }
+
+        // Pluralize if necessary:
+
+        delta = Math.floor(delta);
+        //if ( delta !== 1 ) { units += 's'; }
+
+        return [" منذ ", delta, units].join(' ');
+
+    }
+
+    function getParameterByName(name)
+    {
+        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+        var regexS = "[\\?&]" + name + "=([^&#]*)";
+        var regex = new RegExp(regexS);
+        var results = regex.exec(window.location.search);
+        if (results == null)
+        {
+            ////console.log(name + " parameter not found");
+            return "";
+        }
+        else
+            return decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+</script>

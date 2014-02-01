@@ -1,0 +1,101 @@
+<script id="youtube-user-min-tmp" type="text/x-jquery-tmpl">
+   
+  
+  <div class="span1" style="margin:5px;">
+    <a href="../page/youtubewallview.php?wallid=${channelname}&tags=${tags}" target="_blank" >
+  
+    <img class="face_img" src="${youtubeimageurl}"/>
+   
+    </a>
+    </div>
+
+
+</script>
+
+
+<strong>أحدث قنوات يوتيوب  تمت اضافتها</strong>
+<div class="row-fluid  ">
+    <div id="youtube-user-min"  style="direction:rtl"></div>
+</div>
+
+
+<script>
+    $(document).ready(function()
+    {
+        loadyoutubeusermin(0, '');
+    });
+    var _mainurl = "";//"http://shareournews.byethost32.com";
+
+
+
+    function loadyoutubeusermin(start, posttype)
+    {
+
+        $('.btn_more_youtube-user-min').html('جارى التحميل ...');
+
+        var id = getParameterByName("id");
+         var tags = getParameterByName("tags");
+        var postid = getParameterByName("postid");
+        var wallid = getParameterByName("wallid");
+        
+        var start2 = getParameterByName("start2");
+        if (start2 !== '' & start === 0)
+        {
+            start = parseInt(start2);
+        }
+        if (posttype === '')
+        {
+            posttype = getParameterByName("posttype");
+        }
+
+        var _url = _mainurl + '../api/get.php?object=youtubeuser&_fullinfo=yes&limit=40&sort=time desc &wallid=' + wallid + '&postid=' + postid + '&posttype=' + posttype + '&id=' + id + '&start=' + start + '&tags=' + tags;//'https://api.youtube.com/1/statuses/user_timeline/MuhammadMorsi.json?callback=?&count=5';
+        //console.log("call service : " + _url);
+
+        $.getJSON(_url, function(data)
+        {
+            var tweets = [];
+            var maxtime = data.mintime;
+            var maxid = data.lastid;
+
+            $.each(data.data, function()
+            {
+                this.timeago = relativeTime(this.timeago);
+                tweets.push(this);
+            }
+
+            );
+
+            start += tweets.length;
+          //  $('.btn_more_youtube-user-min').hide('slow');
+            $('#youtube-user-min-tmp').tmpl(tweets).appendTo($("#youtube-user-min"));
+            // $( '[data-toggle="tooltip"]' ).tooltip(); // must to show tootip style
+            if (tweets.length > 0) {
+               // $("#youtube-user-min").append('<button class="span8 offset2 btn-success btn_more_youtube-user-min" onclick="loadyoutubeusermin(' + start + ',\'' + posttype + '\');"> تم عرض  ' + start + ' صفحة حتى الان  - اعرض المزيد</button>');
+            }
+            if (start > 30) {
+              //  $("body").scrollTop($("body").scrollTop() + 200);
+            }
+
+        });
+    }
+    function clearyoutubeusermindiv() {
+        $("#youtube-user-min").html('');
+    }
+
+
+    function getParameterByName(name)
+    {
+        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+        var regexS = "[\\?&]" + name + "=([^&#]*)";
+        var regex = new RegExp(regexS);
+        var results = regex.exec(window.location.search);
+        if (results == null)
+        {
+            ////console.log(name + " parameter not found");
+            return "";
+        }
+        else
+            return decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+</script>

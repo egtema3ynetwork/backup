@@ -1,0 +1,147 @@
+<script id="face-feed-tmp" type="text/x-jquery-tmpl">
+
+
+
+
+
+  
+
+
+    <div class="row-fluid " style="padding: 10px;">
+
+        <div class="span12">
+
+            <div class="container-fluid span11">
+
+                <div class="row-fluid ">
+                    <div class="span12">
+
+
+
+                        <div class="span12  status">
+                            <table style="width: 100%">
+                                <tr>
+                                    <td>
+
+                                       
+                                            <span class="face_fromname ">${wallname}</span>
+
+                                      
+                                    </td>
+                                    <td style="vertical-align: top;">
+                                      
+                                    </td>
+
+                                </tr>
+                            </table>
+
+
+                            <div class="message face_message " style="color: green">{{html postmessage2}}</div>
+                            <div class="message face_message" style="text-align: justify; display: block">{{html postmessage}}</div>
+
+
+                            <div class="face_attachment">
+                                {{if postimage}}
+
+    <a href="${postlinkurl}" target="_blank" ><img class="picture" src="${postimage}" style="position: relative" /></a>
+                                {{/if}}
+    <div class="face_attachment-data">
+        <div class="face_name"><a href="${postlinkurl}" target="_blank"  title="${postlinkurl}" >${postlinkname}</a></div>
+        <div class="face_caption">{{html postcaption}}</div>
+        <div class="face_description face_message">{{html postdescription}}</div>
+    </div>
+                            </div>
+
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="span1">
+                <img class="face_img" src="${wallimageurl}" />
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+ 
+
+
+    <hr>
+</script>
+
+
+
+    <div id="myfacebook-feed" style="direction: rtl;"></div>
+
+
+
+<script>
+    var _mainurl = ""; //"http://shareournews.byethost32.com";
+
+
+    function loadmyfacebookfeeds(feedid) {
+
+        $('#TT_info').html('جارى التحميل ....');
+        $('#div_controls').hide();
+        $("#divcontent1").html('');
+
+        $('<div class=" loadtxt span6 offset3"> ' + 'جارى تحميل البيانات من فضلك انتظر قليلا ...' + ' </div>').appendTo($("#divcontent1"));
+
+        var accesstoken = getParameterByName("accesstoken");
+        if(feedid == '')
+        {
+            feedid = getParameterByName("feedid");
+        }
+      
+
+        var _url = _mainurl + 'http://www.droup.net/facebook/droup/webservices/getfacefeed.php?accesstoken=' + accesstoken + "&feedid=" + feedid;
+
+        console.log("call service : " + _url);
+
+        $.getJSON(_url, function (data) {
+            var faces = [];
+
+            $.each(data.data, function () {
+                this.wallimageurl = "https://graph.facebook.com/" + this.fromid + "/picture?type=square";
+
+                this.postmessage = urlHyperlinks(this.postmessage);
+                this.postmessage2 = urlHyperlinks(this.postmessage2);
+                this.postcaption = urlHyperlinks(this.postcaption);
+                this.postdescription = urlHyperlinks(this.postdescription);
+
+                faces.push(this);
+            }
+
+               );
+
+
+
+
+            if (faces.length > 0) {
+                $('#face-feed-tmp').tmpl(faces).appendTo($("#divcontent1"));
+              //  $("#divcontent1").html($('#face-feed-tmp').tmpl(faces));
+            }
+
+
+
+            $('.btn_more').hide('slow');
+            $('.loadtxt').hide();
+
+            $('#div_controls').show();
+            $('#TT_info').html(' أخر الاخبار على الحائط');
+
+
+
+        });
+    }
+
+
+</script>

@@ -1,0 +1,153 @@
+﻿<script id="facebook-profile-tmp" type="text/x-jquery-tmpl">
+
+
+
+    <div class="row-fluid shadow" style="padding:10px;">
+
+        <div class="span12">
+
+            <div class="span9  status">
+                
+                
+              
+                <div class=" row-fluid face_fromname">${name}</div>
+                 <div class=" row-fluid">${username}</div>
+               <div class=" row-fluid">${email}</div>
+                <div class=" row-fluid">${gender}</div>
+                <div class=" row-fluid">${birthday}</div>
+                <div class=" row-fluid">${location}</div>
+               
+                
+                
+
+            </div>
+
+            <div class="span3">
+                <img class="face_img" src="${imageurl}" />
+            </div>
+
+        </div>
+
+    </div>
+
+    <hr>
+
+
+</script>
+
+
+
+<div class="row-fluid  ">
+    <div  id="facebook-profile"  style="direction:rtl"></div>
+
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        loadfacebookprofile(0, '');
+    });
+    var _mainurl = ""; //"http://shareournews.byethost32.com";
+
+
+
+    function loadfacebookprofile(start, posttype) {
+        var accesstoken = getParameterByName('accesstoken');
+
+        if (accesstoken == null) return;
+
+        var _url = "http://egtema3y.com/profile/getfaceuser.php?accesstoken=" + accesstoken;
+
+        console.log("call service : " + _url);
+
+        $.getJSON(_url, function (data) {
+            var infos = [];
+
+            $.each(data.infos, function () {
+                infos.push(this);
+            }
+
+        );
+
+
+            $('#facebook-profile-tmp').tmpl(infos).appendTo($("#facebook-profile"));
+
+
+        });
+    }
+    function clearfacebookprofilediv() {
+        $("#facebook-profile").html('');
+    }
+
+    function urlHyperlinks(str) {
+        if (str === null)
+            return null;
+        var str2 = str;
+
+
+        str2 = str.replace(/\b((http|https|ftp):\/\/\S+)/g, '<a href="$1" target="_blank">$1</a>');
+
+        if (str2 === str) {
+            str2 = str.replace(/\b((www)\.\S+)/g, '<a href="http://$1" target="_blank">$1</a>');
+        }
+
+        str2 = str2.replace('\n', '          ');
+        //str2 = str2.replace(/\b#\S+/g, '<a href="https://twitter.com/search?q=$1" target="_blank">$1</a>');
+
+
+        return str2;
+    }
+
+    function relativeTime(delta) {
+
+        delta = (delta * 1000); // - (2 * 60 *60 * 1000 ); //-> ms
+
+        if (delta <= 10000) {   // Less than 10 seconds ago
+            return 'منذ قليل';
+        }
+
+        var units = null;
+
+        var conversions = {
+            millisecond: 1, // ms -> ms
+            ثانية: 1000, // ms -> sec
+            دقيقة: 60, // sec -> min
+            ساعة: 60, // min -> hour
+            يوم: 24, // hour -> day
+            شهر: 30, // day -> month (roughly)
+            سنة: 12         // month -> year
+        };
+
+        for (var key in conversions) {
+            if (delta < conversions[key]) {
+                break;
+            }
+            else {
+                units = key;
+                delta = delta / conversions[key];
+            }
+        }
+
+        // Pluralize if necessary:
+
+        delta = Math.floor(delta);
+        //if ( delta !== 1 ) { units += 's'; }
+
+        return [" منذ ", delta, units].join(' ');
+
+    }
+
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+        var regexS = "[\\?&]" + name + "=([^&#]*)";
+        var regex = new RegExp(regexS);
+        var results = regex.exec(window.location.search);
+        if (results == null) {
+            ////console.log(name + " parameter not found");
+           return null;
+        }
+        else
+            return decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+</script>

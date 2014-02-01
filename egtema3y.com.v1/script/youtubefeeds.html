@@ -1,0 +1,256 @@
+﻿<script id="tube-feed-tmp" type="text/x-jquery-tmpl">
+
+
+
+<div class="row-fluid " style="padding:10px;">
+    <div class="btn-danger shadow" style="height:1px"></div>
+
+    <div class="row-fluid " style="padding:10px;">
+    <div class="span12">
+
+    <div class="span11  status">
+
+    <table style="width: 90%">
+    <tr>
+    <td>
+
+    <a href="../page/youtubewallview.php?channelname=${channelname}&tags=${tags}" target="_blank" >
+    <div class="face_fromname">${channelname}</div>
+    </a>
+    </td>
+    <td style="vertical-align: top;">
+    <div style="font-size: x-small; color: #C0C0C0; text-align: left;">${timeago}</div>
+    </td>
+
+    </tr>
+    </table>
+
+
+
+    <p></p>
+    <p class="message face_message">{{html title}}</p>
+	<p class="message face_message">{{html description}}</p>
+	<p>
+	<center>
+	<div id="div_${videoid}">
+	
+	<img id="img_${videoid}" onclick="playvideo('${videoid}');" src="http://img.youtube.com/vi/${videoid}/0.jpg" style="width:400px;height:300px;">
+<p></p>
+
+	<div class="row-fluid">
+	<img onclick="playvideo('${videoid}');" src="http://img.youtube.com/vi/${videoid}/1.jpg" style="width:100px;height:100px;">
+	<img onclick="playvideo('${videoid}');" src="http://img.youtube.com/vi/${videoid}/2.jpg" style="width:100px;height:100px;">
+	<img onclick="playvideo('${videoid}');" src="http://img.youtube.com/vi/${videoid}/3.jpg" style="width:100px;height:100px;">
+	</div>
+	
+</div>
+	</center>
+
+	</p>
+    </div>
+
+    <div class="span1">
+    <img class="face_img" src="${channelimageurl}" />
+    </div>
+
+    </div>
+
+
+    </div>
+
+    <div  class="row-fluid " padding="10" marrgin="10" style="visibility: collapse;">
+    <a href="../page/youtubepostview.php?videoid=${videoid}&tags=${tags}" target="_blank" class="btn btn-danger  btn-small face_controlpanel"> 
+	تابع التعليقات وسجل اعجابك
+	</a>
+
+   
+
+
+    </div>
+</div>
+    <hr />
+
+
+</script>
+
+
+
+<div class="row-fluid  ">
+    <div id="youtube-feed"  style="direction:rtl"></div>
+
+</div>
+
+
+<script>
+    $(document).ready(function()
+    {
+        loadyoutubefeeds(0, '');
+    });
+    var _mainurl = "";//"http://shareournews.byethost32.com";
+
+function playvideo(id)
+{
+
+
+
+   var v = '<div height="300px" width="400px" style="margin:10">';
+	v += '<object height="300px" width="400px">';
+	v += '<param height="300px" width="400px" name="movie" value="http://www.youtube.com/v/' + id + '?autoplay=1&vq=small">';
+	v += '</param><param name="allowFullScreen" value="true"></param>';
+	v += '<param name="allowscriptaccess" value="always"></param>';
+	
+	
+	
+	v += '<embed height="300px" width="400px" src="http://www.youtube.com/v/' +  id  + '?autoplay=1&vq=small" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" >';
+	v += '</embed></object></div>';
+	
+	$('#div_' + id).html(v);
+
+}
+
+    function loadyoutubefeeds(start, posttype,maxtime)
+    {
+
+        $('.btn_more_youtube').html('جارى التحميل ...');
+        $('<div class=" loadtxt span6 offset3"> ' + 'جارى تحميل البيانات من فضلك انتظر قليلا ...' + ' </div>').appendTo($("#youtube-feed"));
+        var search = getParameterByName("search");
+		var publicview = getParameterByName("publicview");
+        var tags = getParameterByName("tags");
+        var id = getParameterByName("id");
+        var videoid = getParameterByName("videoid");
+        var channelname = getParameterByName("channelname");
+        
+        var start2 = getParameterByName("start2");
+        if (start2 !== '' & start === 0)
+        {
+            start = parseInt(start2);
+        }
+        if (posttype === '')
+        {
+            posttype = getParameterByName("posttype");
+        }
+
+        var _url = _mainurl + '../api/get.php?object=youtube&_fullinfo=yes&sort=time desc &channelname=' + channelname + '&videoid=' + videoid + '&posttype=' + posttype + '&id=' + id + '&start=' + start + '&search=' + search + '&tags=' + tags + '&maxtime=' + maxtime + '&publicview=' + publicview;//'https://api.youtube.com/1/statuses/user_timeline/MuhammadMorsi.json?callback=?&count=5';
+        //console.log("call service : " + _url);
+
+        $.getJSON(_url, function(data)
+        {
+            var tubes = [];
+            
+
+            $.each(data.data, function()
+            {
+                this.title = urlHyperlinks(this.title);
+				this.description = urlHyperlinks(this.description);
+                this.timeago = relativeTime(this.timeago);
+                tubes.push(this);
+            }
+
+            );
+
+            start += tubes.length;
+            if (undefined == maxtime) {
+                start = 0;
+            }
+            maxtime = data.mintime;
+            var maxid = data.lastid;
+
+            $('.btn_more_youtube').hide('slow');
+            $('.loadtxt').hide();
+            $('#tube-feed-tmp').tmpl(tubes).appendTo($("#youtube-feed"));
+            // $( '[data-toggle="tooltip"]' ).tooltip(); // must to show tootip style
+            if (tubes.length > 0) {
+                $("#youtube-feed").append('<center><button class="span8 offset2 btn-success shadow btn_more_youtube" onclick="loadyoutubefeeds(' + start + ',\'' + posttype + '\',\'' + maxtime + '\');">اعرض المزيد من الفيديوهات </button></center>');
+            }
+            if (start > 30) {
+                $("body").scrollTop($("body").scrollTop() + 200);
+            }
+
+        });
+    }
+    function clearyoutubediv() {
+        $("#youtube-feed").html('');
+    }
+
+    function urlHyperlinks(str)
+    {
+        if (str === null)
+            return null;
+        var str2 = str;
+
+
+        str2 = str.replace(/\b((http|https|ftp):\/\/\S+)/g, '<a href="$1" target="_blank">$1</a>');
+
+        if (str2 === str)
+        {
+            str2 = str.replace(/\b((www)\.\S+)/g, '<a href="http://$1" target="_blank">$1</a>');
+        }
+
+        str2 = str2.replace('\n', '          ');
+        //str2 = str2.replace(/\b#\S+/g, '<a href="https://youtube.com/search?q=$1" target="_blank">$1</a>');
+
+
+        return str2;
+    }
+
+    function relativeTime(delta)
+    {
+
+        delta = (delta * 1000)- (2 * 60 *60 * 1000 ); //-> ms
+
+        if (delta <= 10000)
+        {	// Less than 10 seconds ago
+            return 'منذ قليل';
+        }
+
+        var units = null;
+
+        var conversions = {
+            millisecond: 1, // ms -> ms
+            ثانية: 1000, // ms -> sec
+            دقيقة: 60, // sec -> min
+            ساعة: 60, // min -> hour
+            يوم: 24, // hour -> day
+            شهر: 30, // day -> month (roughly)
+            سنة: 12			// month -> year
+        };
+
+        for (var key in conversions)
+        {
+            if (delta < conversions[key])
+            {
+                break;
+            }
+            else
+            {
+                units = key;
+                delta = delta / conversions[key];
+            }
+        }
+
+        // Pluralize if necessary:
+
+        delta = Math.floor(delta);
+        //if ( delta !== 1 ) { units += 's'; }
+
+        return [" منذ ", delta, units].join(' ');
+
+    }
+
+    function getParameterByName(name)
+    {
+        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+        var regexS = "[\\?&]" + name + "=([^&#]*)";
+        var regex = new RegExp(regexS);
+        var results = regex.exec(window.location.search);
+        if (results == null)
+        {
+            ////console.log(name + " parameter not found");
+            return "";
+        }
+        else
+            return decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+</script>
+

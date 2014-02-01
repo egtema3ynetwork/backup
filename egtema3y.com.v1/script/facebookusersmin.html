@@ -1,0 +1,165 @@
+<script id="facebook-user-min-tmp" type="text/x-jquery-tmpl">
+
+
+    <div class="span1" style="margin:5px;">
+    <a href="../page/facebookwallview.php?wallid=${wallid}&tags=${tags}" target="_blank" >
+
+    <img class="face_img" src="${wallimageurl}" alt="${wallname}"/>
+
+    </a>
+    </div>
+
+
+</script>
+
+
+<strong>أحدث صفحات الفيسبوك التى تمت اضافتها</strong>
+<div class="row-fluid  ">
+    <div id="facebook-user-min"  style="direction:rtl"></div>
+</div>
+
+
+<script>
+    $(document).ready(function()
+    {
+    loadfacebookusermin(0, '');
+    });
+    var _mainurl = "";//"http://shareournews.byethost32.com";
+
+
+
+    function loadfacebookusermin(start, posttype)
+    {
+
+    $('.btn_more_facebook-user-min').html('جارى التحميل ...');
+
+    var id = getParameterByName("id");
+    var tags = getParameterByName("tags");
+    var postid = getParameterByName("postid");
+    var wallid = getParameterByName("wallid");
+
+    var start2 = getParameterByName("start2");
+    if (start2 !== '' & start === 0)
+    {
+    start = parseInt(start2);
+    }
+    if (posttype === '')
+    {
+    posttype = getParameterByName("posttype");
+    }
+
+    var _url = _mainurl + '../api/get.php?object=facebookuser&_fullinfo=yes&limit=40&sort=time desc &wallid=' + wallid + '&postid=' + postid + '&posttype=' + posttype + '&id=' + id + '&start=' + start + '&tags=' + tags;//'https://api.twitter.com/1/statuses/user_timeline/MuhammadMorsi.json?callback=?&count=5';
+    //console.log("call service : " + _url);
+
+    $.getJSON(_url, function(data)
+    {
+    var tweets = [];
+    var maxtime = data.mintime;
+    var maxid = data.lastid;
+
+    $.each(data.data, function()
+    {
+    this.timeago = relativeTime(this.timeago);
+    tweets.push(this);
+    }
+
+    );
+
+    start += tweets.length;
+    //  $('.btn_more_facebook-user-min').hide('slow');
+    $('#facebook-user-min-tmp').tmpl(tweets).appendTo($("#facebook-user-min"));
+    // $( '[data-toggle="tooltip"]' ).tooltip(); // must to show tootip style
+    if (tweets.length > 0) {
+    // $("#facebook-user-min").append('<button class="span8 offset2 btn-success btn_more_facebook-user-min" onclick="loadfacebookusermin(' + start + ',\'' + posttype + '\');"> تم عرض  ' + start + ' صفحة حتى الان  - اعرض المزيد</button>');
+    }
+    if (start > 30) {
+    //  $("body").scrollTop($("body").scrollTop() + 200);
+    }
+
+    });
+    }
+    function clearfacebookusermindiv() {
+    $("#facebook-user-min").html('');
+    }
+
+    function urlHyperlinks(str)
+    {
+    if (str === null)
+    return null;
+    var str2 = str;
+
+
+    str2 = str.replace(/\b((http|https|ftp):\/\/\S+)/g, '<a href="$1" target="_blank">$1</a>');
+
+    if (str2 === str)
+    {
+    str2 = str.replace(/\b((www)\.\S+)/g, '<a href="http://$1" target="_blank">$1</a>');
+    }
+
+    str2 = str2.replace('\n', '          ');
+    //str2 = str2.replace(/\b#\S+/g, '<a href="https://twitter.com/search?q=$1" target="_blank">$1</a>');
+
+
+    return str2;
+    }
+
+    function relativeTime(delta)
+    {
+
+    delta = (delta * 1000)- (1 * 60 *60 * 1000 ); //-> ms
+
+    if (delta <= 10000)
+    {	// Less than 10 seconds ago
+    return 'منذ قليل';
+    }
+
+    var units = null;
+
+    var conversions = {
+    millisecond: 1, // ms -> ms
+    ثانية: 1000, // ms -> sec
+    دقيقة: 60, // sec -> min
+    ساعة: 60, // min -> hour
+    يوم: 24, // hour -> day
+    شهر: 30, // day -> month (roughly)
+    سنة: 12			// month -> year
+    };
+
+    for (var key in conversions)
+    {
+    if (delta < conversions[key])
+    {
+    break;
+    }
+    else
+    {
+    units = key;
+    delta = delta / conversions[key];
+    }
+    }
+
+    // Pluralize if necessary:
+
+    delta = Math.floor(delta);
+    //if ( delta !== 1 ) { units += 's'; }
+
+    return [" منذ ", delta, units].join(' ');
+
+    }
+
+    function getParameterByName(name)
+    {
+    name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+    var regexS = "[\\?&]" + name + "=([^&#]*)";
+    var regex = new RegExp(regexS);
+    var results = regex.exec(window.location.search);
+    if (results == null)
+    {
+    ////console.log(name + " parameter not found");
+    return "";
+    }
+    else
+    return decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+</script>

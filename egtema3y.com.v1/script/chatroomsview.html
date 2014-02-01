@@ -1,0 +1,141 @@
+<script id="chatroomview-tmp" type="text/x-jquery-tmpl">
+   
+  <div class="span4 shadow" style="margin:5px;">
+    <center>
+     <div class="row-fluid" style="margin:5px;">
+    ${name}
+    </div>
+ 
+  <div class="row-fluid" style="margin:5px;">
+   
+  
+    <img class="face_img" src="../img/chat.png"/>
+   
+   
+    </div>
+     <div class="row-fluid" style="margin:5px;">
+    <a class="btn btn-info" onclick="openchatroom(${id},'${tags}');" target="_blank" >
+    انضم للشات
+    </a><br>
+
+    <div class="row-fluid">
+    كلمة المرور : 
+     <input type="password" id="password_${id}" value="${freepassword}" />
+     <input type="hidden" id="hidden_${id}" value="${password}"/>
+    </div>
+
+
+    </div>
+    </center>
+    </div>
+
+</script>
+
+
+            
+             <div class="label label-info"> سجل دخولك باستخدام حساب الفيسبوك اولا قبل الانضمام الى غرفة الشات</div>
+<br><strong>شات إجتماعى هو شات أمن محمى بكلمة مرور - أحصل على غرفتك للشات الان</strong>
+ الغرف العامة المسموح دخولها لاى احد سوف تفتح معك اوتوماتك
+
+<hr>
+<div class="row-fluid  ">
+    <div id="chatroomview"  style="direction:rtl"></div>
+    
+</div>
+<hr>
+<p style="font-size: x-large;height: 25px;">  شبكة إجتماعى أول شبكة عربية للتواصل الإجتماعى </p>
+             <div class="fb-follow" data-href="https://www.facebook.com/amr0123060349" data-layout="button_count" data-show-faces="false" data-width="450"></div>
+             
+   <p class="label label-success"> 01122354855</p>
+            لطلبات الاشتراك والتواصل عبر البريد الالكترونى أو الهاتف من داخل مصر
+                <p class="label label-warning">
+                     Egtema3yNetwork@Gmail.Com</p>
+            
+             <hr>
+ <div id="app_price" style="width: 90%;">
+
+            <div class="row-fluid"  style="padding: 5px;">
+                <div class="span3 label label-primary">قيمة الاشتراك</div>
+                <div class="span3 label label-primary"> مدة الاشتراك</div>
+                <div class="span6 label label-primary">نوع الاشتراك</div>
+            </div>
+
+             <div class="row-fluid" style="padding: 5px;">
+                <div class="span3 label label-success">100 جنية</div>
+                <div class="span3 label label-success">عام كامل</div>
+                <div class="span6 label label-success">متعدد المستخدمين - غرفة محمية بكلمة سر أو بدون</div>
+            </div>
+     </div>
+
+<hr>
+<script>
+    $(document).ready(function () {
+        loadchatroomview(0, '');
+        
+    });
+    var _mainurl = ""; //"http://shareournews.byethost32.com";
+
+    function openchatroom(id, tags) {
+        var url = "../page/chatmessages.php?wallid=" + id + "&tags=" + tags;
+        var p1 = $('#password_' + id).val();
+        var p2 = $('#hidden_' + id).val();
+
+        if (p1 === p2) {
+            window.location.href = url ;
+        }
+        else {
+            alert('كلمة السر غير صحيحة');
+        }
+    }
+
+    function loadchatroomview(start, posttype) {
+
+
+
+        var _url = _mainurl + '../api/get.php?object=chatroomuser&_fullinfo=yes&limit=40&sort=time ';
+        //console.log("call service : " + _url);
+
+        $.getJSON(_url, function (data) {
+            var tweets = [];
+            var maxtime = data.mintime;
+            var maxid = data.lastid;
+
+            $.each(data.data, function () {
+                // this.timeago = relativeTime(this.timeago);
+                tweets.push(this);
+            }
+
+            );
+
+            // start += tweets.length;
+            //  $('.btn_more_chatroomview').hide('slow');
+            $('#chatroomview-tmp').tmpl(tweets).appendTo($("#chatroomview"));
+            // $( '[data-toggle="tooltip"]' ).tooltip(); // must to show tootip style
+            if (tweets.length > 0) {
+                //  $("#chatroomview").append('<button class="span8 offset2 btn-success btn_more_chatroomview" onclick="loadchatroomview(' + start + ',\'' + posttype + '\');"> تم عرض  ' + start + ' غرفة حتى الان  - اعرض المزيد</button>');
+            }
+            // if (start > 30) {
+            //  $("body").scrollTop($("body").scrollTop() + 200);
+            // }
+
+        });
+    }
+    function clearchatroomviewdiv() {
+        $("#chatroomview").html('');
+    }
+
+
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+        var regexS = "[\\?&]" + name + "=([^&#]*)";
+        var regex = new RegExp(regexS);
+        var results = regex.exec(window.location.search);
+        if (results == null) {
+            ////console.log(name + " parameter not found");
+            return "";
+        }
+        else
+            return decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+</script>

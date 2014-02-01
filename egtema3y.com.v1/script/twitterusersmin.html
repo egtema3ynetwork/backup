@@ -1,0 +1,101 @@
+<script id="twitter-user-min-tmp" type="text/x-jquery-tmpl">
+   
+  
+  <div class="span1" style="margin:5px;">
+    <a href="../page/twitterwallview.php?wallid=${twitterscreenname}&tags=${tags}" target="_blank" >
+  
+    <img class="face_img" src="${twitterimageurl}"/>
+   
+    </a>
+    </div>
+
+
+</script>
+
+
+<strong>أحدث حسابات تويتر التى تمت اضافتها</strong>
+<div class="row-fluid  ">
+    <div id="twitter-user-min"  style="direction:rtl"></div>
+</div>
+
+
+<script>
+    $(document).ready(function()
+    {
+        loadtwitterusermin(0, '');
+    });
+    var _mainurl = "";//"http://shareournews.byethost32.com";
+
+
+
+    function loadtwitterusermin(start, posttype)
+    {
+
+        $('.btn_more_twitter-user-min').html('جارى التحميل ...');
+
+        var id = getParameterByName("id");
+         var tags = getParameterByName("tags");
+        var postid = getParameterByName("postid");
+        var wallid = getParameterByName("wallid");
+        
+        var start2 = getParameterByName("start2");
+        if (start2 !== '' & start === 0)
+        {
+            start = parseInt(start2);
+        }
+        if (posttype === '')
+        {
+            posttype = getParameterByName("posttype");
+        }
+
+        var _url = _mainurl + '../api/get.php?object=twitteruser&_fullinfo=yes&limit=40&sort=time desc &wallid=' + wallid + '&postid=' + postid + '&posttype=' + posttype + '&id=' + id + '&start=' + start + '&tags=' + tags;//'https://api.twitter.com/1/statuses/user_timeline/MuhammadMorsi.json?callback=?&count=5';
+        //console.log("call service : " + _url);
+
+        $.getJSON(_url, function(data)
+        {
+            var tweets = [];
+            var maxtime = data.mintime;
+            var maxid = data.lastid;
+
+            $.each(data.data, function()
+            {
+                this.timeago = relativeTime(this.timeago);
+                tweets.push(this);
+            }
+
+            );
+
+            start += tweets.length;
+          //  $('.btn_more_twitter-user-min').hide('slow');
+            $('#twitter-user-min-tmp').tmpl(tweets).appendTo($("#twitter-user-min"));
+            // $( '[data-toggle="tooltip"]' ).tooltip(); // must to show tootip style
+            if (tweets.length > 0) {
+               // $("#twitter-user-min").append('<button class="span8 offset2 btn-success btn_more_twitter-user-min" onclick="loadtwitterusermin(' + start + ',\'' + posttype + '\');"> تم عرض  ' + start + ' صفحة حتى الان  - اعرض المزيد</button>');
+            }
+            if (start > 30) {
+              //  $("body").scrollTop($("body").scrollTop() + 200);
+            }
+
+        });
+    }
+    function cleartwitterusermindiv() {
+        $("#twitter-user-min").html('');
+    }
+
+
+    function getParameterByName(name)
+    {
+        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+        var regexS = "[\\?&]" + name + "=([^&#]*)";
+        var regex = new RegExp(regexS);
+        var results = regex.exec(window.location.search);
+        if (results == null)
+        {
+            ////console.log(name + " parameter not found");
+            return "";
+        }
+        else
+            return decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+</script>

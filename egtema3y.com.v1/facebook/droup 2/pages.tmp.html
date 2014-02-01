@@ -1,0 +1,82 @@
+﻿<script id="facebook-pages-tmp" type="text/x-jquery-tmpl">
+
+
+
+    <div class="row-fluid shadow" style="padding:10px;">
+
+        <div class="span12">
+
+            <div class="span9  status">
+                
+                
+              
+                <div class=" row-fluid face_fromname"><a href="http://facebook.com/${id}" target="_blank">${name}</a></div>
+                 <div class=" row-fluid">${id}</div>
+               <div class=" row-fluid">${category}</div>
+             
+                
+
+            </div>
+
+            <div class="span3">
+                <img class="face_img" src="https://graph.facebook.com/${id}/picture?type=square" />
+            </div>
+
+        </div>
+     <a onClick="loadmyfacebookfeeds('${id}');$('html, body').animate({ scrollTop: 0 }, 'fast');" >حائط الصفحة</a>
+    </div>
+
+    <hr>
+
+
+</script>
+
+
+
+<div class="row-fluid  ">
+    <div  id="facebook-pages"  style="direction:rtl"></div>
+
+</div>
+   
+
+<script>
+    $(document).ready(function () {
+
+    });
+    var _mainurl = ""; //"http://shareournews.byethost32.com";
+
+
+
+    function loadfacebookpages() {
+        var accesstoken = getParameterByName('accesstoken');
+
+        if (accesstoken == null) return;
+           $("#divcontent1").html('');
+        $('#div_controls').hide();
+        $('#TT_info').html('جارى التحميل ....');
+
+        var _url = "http://www.droup.net/facebook/droup/webservices/getfacepages.php?accesstoken=" + accesstoken;
+        console.log("call service : " + _url);
+
+        $.getJSON(_url, function (data) {
+            var infos = [];
+
+            $.each(data.infos, function () {
+                infos.push(this);
+            }
+
+        );
+
+            var count = infos.length;
+            $('#TT_info').html(' عدد الصفحات '+ ' = ' + count + '  ')
+            $('#div_controls').show();
+          //  $('#facebook-pages-tmp').tmpl(infos).appendTo($("#facebook-pages"));
+           $('#facebook-pages-tmp').tmpl(infos).appendTo($("#divcontent1"));
+
+        });
+    }
+    function clearfacebookpagesdiv() {
+        $("#facebook-pages").html('');
+    }
+
+</script>

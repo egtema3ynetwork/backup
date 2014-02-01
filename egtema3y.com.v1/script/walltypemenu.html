@@ -1,0 +1,54 @@
+<script id="walltypeinfo-tmp" type="text/x-jquery-tmpl">
+
+   
+       
+
+           <a href="../page/index.php?search=${tags}" class="btn btn-inverse shadow" style="margin:5px;width:140px" >
+                
+               ${wallname}
+        </a>
+    
+ 
+ 
+   
+
+</script>
+
+
+<div class="navmenu ">
+    <div id="walltypeinfo-div" ></div>
+</div>
+ 
+
+
+<script>
+    var _mainurl ="" ;//"http://shareournews.byethost32.com";
+
+    $( document ).ready( function ()
+    {
+        walltypeinfo();
+    } );
+    
+    function walltypeinfo()
+    {
+        
+        var _url = _mainurl + '../api/get.php?object=walltypeinfo';
+        //console.log( _url );
+        $.getJSON( _url, function ( data )
+        {
+            var types = [];
+            $.each( data, function ()
+            {
+                types.push( this );
+            });
+
+            $( '#walltypeinfo-tmp' ).tmpl( types ).appendTo( $( "#walltypeinfo-div" ) );
+           // $( '[data-toggle="tooltip"]' ).tooltip(); // must to show tootip style
+            
+
+        } );
+    }
+
+</script>
+
+

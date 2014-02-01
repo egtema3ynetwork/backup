@@ -1,0 +1,127 @@
+﻿<script id="facebook-profile-tmp" type="text/x-jquery-tmpl">
+
+  <div class="row-fluid">
+     <div class="row-fluid  shadow btn-inverse" style="height: 10px;"></div>
+
+    <div class="row-fluid shadow" style="padding:10px;">
+
+        <div class="span12">
+
+            <div class="span9  status">
+                
+                
+              
+                <div class=" row-fluid face_fromname">
+    
+    ${name}
+   
+    </div>
+                 <div class=" row-fluid">${username}</div>
+               
+                  <div class=" row-fluid">${id}</div>
+               <div class=" row-fluid">${email}</div>
+                <div class=" row-fluid">${gender}</div>
+                <div class=" row-fluid">${birthday}</div>
+                <div class=" row-fluid">${location}</div>
+               
+                
+                
+
+            </div>
+
+            <div class="span3">
+    <a href="http://facebook.com/${userid}" target="_blank">
+                <img class="face_img" src="https://graph.facebook.com/${userid}/picture?type=square" />
+    </a>
+   
+            </div>
+
+        </div>
+
+    </div>
+  </div>
+<hr>
+
+   
+
+</script>
+
+
+
+<div >
+   
+    <div class="row-fluid  " id="facebook-profile" ></div>
+
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        loadfacebookprofile();
+    });
+    var _mainurl = ""; //"http://shareournews.byethost32.com";
+
+
+
+    function loadfacebookprofile() {
+        var accesstoken = getParameterByName('accesstoken');
+var option = getParameterByName('option');
+        var _url = "";
+
+        if (accesstoken == "" || accesstoken == null) {
+		
+		    _url = "http://www.droup.net/facebook/droup/webservices/getfaceuser.php?object=facebooky&limit=100";
+        }
+        else {
+            _url = "http://www.droup.net/facebook/droup/webservices/getfaceuser.php?accesstoken=" + accesstoken;
+        }
+
+
+
+        console.log("call service : " + _url);
+
+        $.getJSON(_url, function (data) {
+            var infos = [];
+
+
+
+            $.each(data.infos, function () {
+                infos.push(this);
+
+                 var option = getParameterByName('option');
+                if (option == "chat") {
+                   // alert(' each 2');
+                    setCookie("username", this.username, 365);
+                    setCookie("id", this.id, 365);
+                    setCookie("gender", this.gender, 365);
+                    setCookie("faceid", this.userid, 365);
+                    setCookie("accesstoken", this.accesstoken, 365);
+                  //  alert('each cookie set ');
+                }
+
+            });
+
+            var option2 = getParameterByName('option');
+            if (option2 == "chat") {
+
+                if (infos.lengh > 0) {
+                  //  alert(' > 0 ');
+                    setCookie("username", infos[0].username, 365);
+                    setCookie("id", infos[0].id, 365);
+                    setCookie("gender", infos[0].gender, 365);
+                    setCookie("faceid", infos[0].userid, 365);
+                    setCookie("accesstoken", infos[0].accesstoken, 365);
+                   // alert('cookie set ');
+                }
+            }
+
+            $('#facebook-profile-tmp').tmpl(infos).appendTo($("#facebook-profile"));
+
+
+        });
+    }
+    function clearfacebookprofilediv() {
+        $("#facebook-profile").html('');
+    }
+
+</script>
